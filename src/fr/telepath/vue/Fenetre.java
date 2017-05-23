@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -13,12 +14,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JWindow;
 
 import fr.telepath.controleur.EcouteurAccueil;
 
@@ -34,7 +37,7 @@ public class Fenetre extends JFrame {
 	private static final int LARGEUR = 600;
 	private static final int HAUTEUR = 600;
 	private static final boolean REDIMENSIONNABLE = false;
-	private static final String VERSION = "0.1";
+	private static final String VERSION = "0.2";
 	private static final String NOM_FENETRE = "Télépath - Aymerik ABOSO ; M1 MIAGE ; 2016 - 2017 ; V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_IMAGE_LOGO = "logo.png";
@@ -61,6 +64,17 @@ public class Fenetre extends JFrame {
 		getRootPane().setCursor(java.awt.Toolkit.getDefaultToolkit().createCustomCursor(
 				new ImageIcon(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_CURSEUR).getImage(), new Point(1,1),"customCursor"));
 		afficherPageAccueil();
+	}
+	
+	public void afficherSplashScreen() {
+		final int AJOUT_LARGEUR = 30;
+		final int AJOUT_HAUTEUR = 20;
+		final long DUREE_SECONDE = 5;
+		final long DUREE_MILLIS = DUREE_SECONDE * 1000;
+		
+		SplashScreen splash = new SplashScreen(AJOUT_LARGEUR, AJOUT_HAUTEUR, 
+				NOM_DOSSIER_RESSOURCE + NOM_IMAGE_LOGO, DUREE_MILLIS);
+		splash.afficher();
 	}
 
 	public void updateAffichage() {

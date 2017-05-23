@@ -23,7 +23,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static final Dimension DIMENSION_DIALOG = new Dimension(600, 600);
 	private static final boolean REDIMENSIONNABLE = false;
-	private static final Color COULEUR_FOND = new Color(255, 255, 255);
+	private static final Color COULEUR_FOND = new Color(199, 249, 226);
 	
 	private Fenetre fenetreParent;
 	private Container contenu;
