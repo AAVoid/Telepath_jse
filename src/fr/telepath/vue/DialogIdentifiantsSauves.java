@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+
+import fr.telepath.controleur.Controleur;
+import fr.telepath.modele.IdentifiantSauve;
 
 
 
@@ -26,6 +28,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 	private Fenetre fenetreParent;
 	private Container contenu;
 	private JPasswordField idPasswordField; //Celui de la fenêtre parente pour pouvoir renseigner le champs
+	private ArrayList<IdentifiantSauve> listeIdentifiants;
 	
 	public void updateAffichage() {
 		this.contenu.validate();
@@ -38,6 +41,11 @@ public class DialogIdentifiantsSauves extends JDialog {
 
 	public void effacer() {
 		this.setVisible(false);
+	}
+	
+	//Lit les identifiants sauvegardés dans le fichier SQLite
+	private void chargerListeIdSQLITE() {
+		this.listeIdentifiants = Controleur.chargerIdentifiantsSauve();
 	}
 
 	public DialogIdentifiantsSauves(Fenetre fenetreParent, String nom, boolean modal, JPasswordField idPasswordField){
@@ -59,6 +67,9 @@ public class DialogIdentifiantsSauves extends JDialog {
 //		this.contenu.add(panneauBackground, BorderLayout.CENTER);
 		contenu.setBackground(COULEUR_FOND);
 		this.idPasswordField = idPasswordField;
+		
+		//chargement des identifiants sauvegardés depuis le fichier SQLite
+		chargerListeIdSQLITE();
 	}
 }
 

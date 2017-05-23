@@ -3,6 +3,8 @@ package fr.telepath.controleur;
 import java.util.ArrayList;
 
 import fr.telepath.modele.IdentifiantSauve;
+import fr.telepath.modele.donnees.DAO_IdentifiantSauve;
+import fr.telepath.modele.donnees.SingletonConnectionSQLITE;
 
 
 
@@ -13,8 +15,11 @@ import fr.telepath.modele.IdentifiantSauve;
 
 //CONTROLEUR AUTRE QUE LES ECOUTEUR
 public class Controleur {
-	public static void chargerIdentifiantsSauve(ArrayList<IdentifiantSauve> liste) {
-		
+	public static ArrayList<IdentifiantSauve> chargerIdentifiantsSauve() {
+		ArrayList<IdentifiantSauve> listeIdentifiants = new ArrayList<IdentifiantSauve>();
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		listeIdentifiants = daoId.lireTable();
+		return listeIdentifiants;
 	}
 }
 
