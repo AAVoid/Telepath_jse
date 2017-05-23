@@ -23,6 +23,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final Color COULEUR_FOND = new Color(255, 255, 255);
 	
+	private Fenetre fenetreParent;
 	private Container contenu;
 	private JPasswordField idPasswordField; //Celui de la fenêtre parente pour pouvoir renseigner le champs
 	
@@ -41,6 +42,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 
 	public DialogIdentifiantsSauves(Fenetre fenetreParent, String nom, boolean modal, JPasswordField idPasswordField){
 		super(fenetreParent, nom, modal);
+		this.fenetreParent = fenetreParent;
 		setSize(DIMENSION_DIALOG.width, DIMENSION_DIALOG.height);
 		setLocationRelativeTo(fenetreParent);
 		setResizable(REDIMENSIONNABLE);

@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,7 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import fr.telepath.controleur.Controleur;
 import fr.telepath.controleur.EcouteurAccueil;
+import fr.telepath.modele.IdentifiantSauve;
 
 
 
@@ -42,6 +45,7 @@ public class Fenetre extends JFrame {
 	private static final String NOM_IMAGE_CURSEUR = "curseur.png";
 
 	private Container contenu; //Pour la content pane
+	private ArrayList<IdentifiantSauve> listeIdSauves;
 
 	public Fenetre() {
 		super();
@@ -110,6 +114,11 @@ public class Fenetre extends JFrame {
 
 	public static String getNomImageCurseur() {
 		return NOM_IMAGE_CURSEUR;
+	}
+	
+	public void chargerIdentifiantsSauves() {
+		this.listeIdSauves = new ArrayList<IdentifiantSauve>();
+		Controleur.chargerIdentifiantsSauve(this.listeIdSauves);
 	}
 	
 	//COPIE DE CHAINE DANS LE PRESSE PAPIER
