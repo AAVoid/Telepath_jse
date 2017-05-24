@@ -62,6 +62,12 @@ public class SplashScreen extends JWindow {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		//Effacement
+		effacer();
+	}
+	
+	public void effacer() {
+		dispose();
 	}
 }
 

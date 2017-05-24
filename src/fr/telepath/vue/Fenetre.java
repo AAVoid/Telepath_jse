@@ -40,6 +40,9 @@ public class Fenetre extends JFrame {
 	private static final String VERSION = "0.2";
 	private static final String NOM_FENETRE = "Télépath - Aymerik ABOSO ; M1 MIAGE ; 2016 - 2017 ; V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
+	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";
+	private static final String NOM_DOSSIER_ICONE = NOM_DOSSIER_RESSOURCE + "Icone/";
+	private static final String NOM_DOSSIER_AUTRE = NOM_DOSSIER_RESSOURCE + "Autre/";
 	private static final String NOM_IMAGE_LOGO = "logo.png";
 	private static final String NOM_IMAGE_ICONE = "icone_fenetre.png";
 	private static final String NOM_IMAGE_CURSEUR = "curseur.png";
@@ -56,13 +59,13 @@ public class Fenetre extends JFrame {
 		this.contenu = this.getContentPane();
 		//ICONE DE LA FENETRE
 		try {
-			setIconImage(ImageIO.read(new File(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_ICONE)));
+			setIconImage(ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_IMAGE_ICONE)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//CURSEUR DANS LA FENETRE
 		getRootPane().setCursor(java.awt.Toolkit.getDefaultToolkit().createCustomCursor(
-				new ImageIcon(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_CURSEUR).getImage(), new Point(1,1),"customCursor"));
+				new ImageIcon(NOM_DOSSIER_ICONE + NOM_IMAGE_CURSEUR).getImage(), new Point(1,1),"customCursor"));
 		afficherPageAccueil();
 	}
 	
@@ -73,7 +76,7 @@ public class Fenetre extends JFrame {
 		final long DUREE_MILLIS = DUREE_SECONDE * 1000;
 		
 		SplashScreen splash = new SplashScreen(AJOUT_LARGEUR, AJOUT_HAUTEUR, 
-				NOM_DOSSIER_RESSOURCE + NOM_IMAGE_LOGO, DUREE_MILLIS);
+				NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO, DUREE_MILLIS);
 		splash.afficher();
 	}
 
@@ -88,6 +91,18 @@ public class Fenetre extends JFrame {
 
 	public void effacer() {
 		this.setVisible(false);
+	}
+
+	public static String getNomDossierBackground() {
+		return NOM_DOSSIER_BACKGROUND;
+	}
+
+	public static String getNomDossierIcone() {
+		return NOM_DOSSIER_ICONE;
+	}
+
+	public static String getNomDossierAutre() {
+		return NOM_DOSSIER_AUTRE;
 	}
 
 	public static int getLargeur() {
@@ -173,7 +188,7 @@ public class Fenetre extends JFrame {
 
 		JPanel panneauBackground = null;
 		try {
-			panneauBackground = new PanneauImage(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_BACKGROUND);
+			panneauBackground = new PanneauImage(NOM_DOSSIER_BACKGROUND + NOM_IMAGE_BACKGROUND);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
