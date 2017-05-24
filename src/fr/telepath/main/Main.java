@@ -2,8 +2,6 @@ package fr.telepath.main;
 
 import fr.telepath.vue.Fenetre;
 
-
-
 //AUTEUR : Aymerik ABOSO , MASTER 1 MIAGE , Université des Antilles - Guadeloupe
 //2016 - 2017
 
