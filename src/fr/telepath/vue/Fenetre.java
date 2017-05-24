@@ -68,13 +68,13 @@ public class Fenetre extends JFrame {
 				new ImageIcon(NOM_DOSSIER_ICONE + NOM_IMAGE_CURSEUR).getImage(), new Point(1,1),"customCursor"));
 		afficherPageAccueil();
 	}
-	
+
 	public void afficherSplashScreen() {
 		final int AJOUT_LARGEUR = 30;
 		final int AJOUT_HAUTEUR = 20;
 		final long DUREE_SECONDE = 5;
 		final long DUREE_MILLIS = DUREE_SECONDE * 1000;
-		
+
 		SplashScreen splash = new SplashScreen(AJOUT_LARGEUR, AJOUT_HAUTEUR, 
 				NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO, DUREE_MILLIS);
 		splash.afficher();
@@ -140,7 +140,7 @@ public class Fenetre extends JFrame {
 	public static String getNomImageCurseur() {
 		return NOM_IMAGE_CURSEUR;
 	}
-	
+
 	//COPIE DE CHAINE DANS LE PRESSE PAPIER
 	public static void copierDansPressePapier(String chaine) {
 		StringSelection ss = new StringSelection(chaine);
@@ -163,15 +163,43 @@ public class Fenetre extends JFrame {
 		final String NOM_IMAGE_BACKGROUND = "background.jpg";
 		final Color COULEUR_LABEL_INSCRIPTION = new Color(255, 255, 255);
 		final String TEXTE_BOUTON_IDENTIFIANTS_SAUVES = "Identifiant(s) sauvegarde(s)";
+		final String NOM_ICONE_INSCRIPTION = "groupe.png";
+		final String NOM_ICONE_ACTIVATION = "ok.png";
+		final String NOM_ICONE_ID_SAUVES = "utilisateur.png";
+		final String NOM_ICONE_SE_CONNECTER = "reseau.png";
 
 		JButton boutonConnexion = new JButton(TEXTE_BOUTON_CONNEXION);
 		boutonConnexion.setPreferredSize(DIMENSION_BOUTON_CONNEXION);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_SE_CONNECTER));
+			boutonConnexion.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JButton boutonInscription = new JButton(TEXTE_BOUTON_INSCRIPTION);
 		boutonInscription.setPreferredSize(DIMENSION_BOUTON_INSCRIPTION); //Taille bouton
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_INSCRIPTION));
+			boutonInscription.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JButton boutonActiverCompte = new JButton(TEXTE_BOUTON_ACTIVER_COMPTE);
 		boutonActiverCompte.setPreferredSize(DIMENSION_BOUTON_ACTIVER_COMPTE);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_ACTIVATION));
+			boutonActiverCompte.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JLabel labelIdentifiant = new JLabel(LABEL_IDENTIFIANT);
 		JButton boutonIdentifiantsSauves = new JButton(TEXTE_BOUTON_IDENTIFIANTS_SAUVES);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_ID_SAUVES));
+			boutonIdentifiantsSauves.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		labelIdentifiant.setForeground(COULEUR_LABEL_INSCRIPTION);
 		ImageIcon logo = new ImageIcon(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_LOGO);
 		JLabel labelImage = new JLabel();
@@ -195,7 +223,7 @@ public class Fenetre extends JFrame {
 		panneauBackground.setLayout(new BorderLayout());
 		//panneauBackground.setBackground(new Color(142, 210, 255));
 		this.contenu.add(panneauBackground, BorderLayout.CENTER);
-		
+
 		JPanel pLogo = new JPanel();
 		panneauBackground.add(pLogo, BorderLayout.NORTH);
 		pLogo.setOpaque(false); //Panneau transparent
@@ -208,10 +236,10 @@ public class Fenetre extends JFrame {
 		JPanel pImage = new JPanel();
 		pImage.setOpaque(false);
 		pImage.setLayout(new FlowLayout(FlowLayout.CENTER)); //ajout au centre (pour éviter que 
-			//le bouton prenne toute la place
+		//le bouton prenne toute la place
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
-		
+
 		JPanel pSouth = new JPanel();
 		pSouth.setOpaque(false);
 		pSouth.setLayout(new BorderLayout());
@@ -245,7 +273,7 @@ public class Fenetre extends JFrame {
 		p4.setLayout(new FlowLayout(FlowLayout.CENTER));
 		p4.add(boutonConnexion);
 		p2.add(p4);
-		
+
 		updateAffichage();
 	}
 }
