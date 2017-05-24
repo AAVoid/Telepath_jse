@@ -14,14 +14,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JWindow;
 
 import fr.telepath.controleur.EcouteurAccueil;
 
@@ -201,7 +199,7 @@ public class Fenetre extends JFrame {
 			e.printStackTrace();
 		}
 		labelIdentifiant.setForeground(COULEUR_LABEL_INSCRIPTION);
-		ImageIcon logo = new ImageIcon(NOM_DOSSIER_RESSOURCE + NOM_IMAGE_LOGO);
+		ImageIcon logo = new ImageIcon(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO);
 		JLabel labelImage = new JLabel();
 		labelImage.setIcon(logo);
 		JPasswordField idPasswordField = new JPasswordField();
