@@ -62,7 +62,7 @@ public class DialogInscription extends JDialog {
 		contenu.setLayout(new BorderLayout());		
 		JPanel panneauBackground = null;
 		try {
-			panneauBackground = new PanneauImage(Fenetre.getNomDossierRessource() + NOM_IMAGE_BACKGROUND);
+			panneauBackground = new PanneauImage(Fenetre.getNomDossierBackground() + NOM_IMAGE_BACKGROUND);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
