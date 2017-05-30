@@ -22,6 +22,7 @@ import javax.swing.JWindow;
 
 public class SplashScreen extends JWindow {
 	private static final long serialVersionUID = 1L;
+	private static final Color COULEUR_FOND = new Color(255, 255, 255);
 	
 	private int ajout_largeur;
 	private int ajout_hauteur;
@@ -48,6 +49,7 @@ public class SplashScreen extends JWindow {
 				this.image.getHeight(null) + this.ajout_hauteur);
 		setLocationRelativeTo(null);      
 	    JPanel pan = new JPanel();
+	    pan.setBackground(COULEUR_FOND);
 	    JLabel img = new JLabel(new ImageIcon(image));     
 	    pan.setBorder(BorderFactory.createLineBorder(Color.blue));
 	    pan.add(img);

@@ -36,7 +36,7 @@ public class Fenetre extends JFrame {
 	private static final int HAUTEUR = 600;
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String VERSION = "0.2";
-	private static final String NOM_FENETRE = "Télépath - Aymerik ABOSO ; M1 MIAGE ; 2016 - 2017 ; V" + VERSION;
+	private static final String NOM_FENETRE = "Télépath V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";
 	private static final String NOM_DOSSIER_ICONE = NOM_DOSSIER_RESSOURCE + "Icone/";
