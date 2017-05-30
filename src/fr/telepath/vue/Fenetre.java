@@ -18,6 +18,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
@@ -35,8 +38,9 @@ public class Fenetre extends JFrame {
 	private static final int LARGEUR = 600;
 	private static final int HAUTEUR = 600;
 	private static final boolean REDIMENSIONNABLE = false;
+	private static final String NOM_APPLICATION = "Télépath";
 	private static final String VERSION = "0.2";
-	private static final String NOM_FENETRE = "Télépath V" + VERSION;
+	private static final String NOM_FENETRE = NOM_APPLICATION + " V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";
 	private static final String NOM_DOSSIER_ICONE = NOM_DOSSIER_RESSOURCE + "Icone/";
@@ -44,8 +48,15 @@ public class Fenetre extends JFrame {
 	private static final String NOM_IMAGE_LOGO = "logo.png";
 	private static final String NOM_IMAGE_ICONE = "icone_fenetre.png";
 	private static final String NOM_IMAGE_CURSEUR = "curseur.png";
+	private static final String NOM_MENU_A_PROPOS_DE = "A propos de...";
+	private static final String NOM_MENU_A_PROPOS_DE_ORIGINE_DE_TELEPATH = "L'origine de " + NOM_APPLICATION;
+	private static final String NOM_MENU_A_PROPOS_DE_ESPRIT_DE_TELEPATH = "L'esprit de " + NOM_APPLICATION;
 
 	private Container contenu; //Pour la content pane
+	private JMenuBar menuBar; //MENU
+	private JMenu menuEntryAProposDe;
+	private JMenuItem menuItemOrigine;
+	private JMenuItem menuItemEsprit;
 
 	public Fenetre() {
 		super();
@@ -64,6 +75,17 @@ public class Fenetre extends JFrame {
 		//CURSEUR DANS LA FENETRE
 		getRootPane().setCursor(java.awt.Toolkit.getDefaultToolkit().createCustomCursor(
 				new ImageIcon(NOM_DOSSIER_ICONE + NOM_IMAGE_CURSEUR).getImage(), new Point(1,1),"customCursor"));
+		//CREATION DU MENU
+		this.menuBar = new JMenuBar();
+		this.menuEntryAProposDe = new JMenu(NOM_MENU_A_PROPOS_DE);
+		this.menuItemOrigine = new JMenuItem(NOM_MENU_A_PROPOS_DE_ORIGINE_DE_TELEPATH);
+		this.menuItemEsprit = new JMenuItem(NOM_MENU_A_PROPOS_DE_ESPRIT_DE_TELEPATH);
+		
+		this.menuEntryAProposDe.add(this.menuItemOrigine);
+		this.menuEntryAProposDe.add(this.menuItemEsprit);
+		this.menuBar.add(this.menuEntryAProposDe);
+		setJMenuBar(this.menuBar);
+		
 		afficherPageAccueil();
 	}
 
@@ -89,6 +111,22 @@ public class Fenetre extends JFrame {
 
 	public void effacer() {
 		this.setVisible(false);
+	}
+
+	public static String getNomApplication() {
+		return NOM_APPLICATION;
+	}
+
+	public static String getNomMenuAProposDe() {
+		return NOM_MENU_A_PROPOS_DE;
+	}
+
+	public static String getNomMenuAProposDeEspritDeTelepath() {
+		return NOM_MENU_A_PROPOS_DE_ESPRIT_DE_TELEPATH;
+	}
+
+	public static String getNomMenuAProposDeOrigineDeTelepath() {
+		return NOM_MENU_A_PROPOS_DE_ORIGINE_DE_TELEPATH;
 	}
 
 	public static String getNomDossierBackground() {
@@ -156,8 +194,8 @@ public class Fenetre extends JFrame {
 		final String LABEL_IDENTIFIANT = "Identifiant       ";
 		final Dimension DIMENSION_PASSWORD_FIELD = new Dimension(230, 30);
 		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 250);
-		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 100);
-		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR,200);
+		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, /*100*/60);
+		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, /*200*/150);
 		final String NOM_IMAGE_BACKGROUND = "background.jpg";
 		final Color COULEUR_LABEL_INSCRIPTION = new Color(255, 255, 255);
 		final String TEXTE_BOUTON_IDENTIFIANTS_SAUVES = "Identifiant(s) sauvegarde(s)";
