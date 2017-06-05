@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import fr.telepath.controleur.EcouteurAccueil;
+import fr.telepath.controleur.EcouteurJMenu;
 
 
 
@@ -79,7 +80,9 @@ public class Fenetre extends JFrame {
 		this.menuBar = new JMenuBar();
 		this.menuEntryAProposDe = new JMenu(NOM_MENU_A_PROPOS_DE);
 		this.menuItemOrigine = new JMenuItem(NOM_MENU_A_PROPOS_DE_ORIGINE_DE_TELEPATH);
+		this.menuItemOrigine.addActionListener(new EcouteurJMenu(this, 1));
 		this.menuItemEsprit = new JMenuItem(NOM_MENU_A_PROPOS_DE_ESPRIT_DE_TELEPATH);
+		this.menuItemEsprit.addActionListener(new EcouteurJMenu(this, 2));
 		
 		this.menuEntryAProposDe.add(this.menuItemOrigine);
 		this.menuEntryAProposDe.add(this.menuItemEsprit);

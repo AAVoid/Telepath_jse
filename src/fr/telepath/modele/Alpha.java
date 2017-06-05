@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 //Classe implémentant le chiffrement Alpha que j'ai créé
 //Alpha est un algorithme de chiffrement symétrique par bloc
-public class AlphaUneCle {
+public class Alpha {
 	private static final int SALT_XOR = 13 + 14 + 17;
 
 	//XOR entre deux bytes
@@ -81,6 +81,11 @@ public class AlphaUneCle {
 		return chiffre;
 	}
 }
+
+
+
+
+
 
 
 
