@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 
@@ -21,10 +23,14 @@ public class DialogEspritTelepath extends JDialog {
 	private static final Dimension DIMENSION_DIALOG = new Dimension(600, 600);
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final Color COULEUR_FOND = new Color(199, 249, 226);
+	private static final String TEXTE = 
+			"<html>le <h1>label du</h1> <span style=\"color:red\">bouton</span><br>ligne suivante</html>";
 
 	private Fenetre fenetreParent;
 	private Container contenu;
-	private ArrayList<JLabel> listeLabel;
+	private JLabel labelTexte;
+	private JScrollPane scrollPane; //Pour le scrolling
+	private JPanel panneauFond;
 
 	public void updateAffichage() {
 		this.contenu.validate();
@@ -46,7 +52,11 @@ public class DialogEspritTelepath extends JDialog {
 		setLocationRelativeTo(fenetreParent);
 		setResizable(REDIMENSIONNABLE);
 
-		this.listeLabel = new ArrayList<JLabel>();
+		this.labelTexte = new JLabel(TEXTE);
+		this.panneauFond = new JPanel();
+		this.panneauFond.setLayout(new BorderLayout());
+		this.panneauFond.add(labelTexte, BorderLayout.CENTER);
+		this.scrollPane = new JScrollPane(this.panneauFond);
 		this.contenu = this.getContentPane();
 		contenu.setLayout(new BorderLayout());		
 		//JPanel panneauBackground = null;
@@ -57,6 +67,7 @@ public class DialogEspritTelepath extends JDialog {
 		//}
 		//panneauBackground.setLayout(new BorderLayout());
 		//this.contenu.add(panneauBackground, BorderLayout.CENTER);
-		contenu.setBackground(COULEUR_FOND);
+		this.panneauFond.setBackground(COULEUR_FOND);
+		contenu.add(this.scrollPane, BorderLayout.CENTER);
 	}
 }
