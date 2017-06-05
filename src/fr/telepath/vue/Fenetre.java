@@ -40,6 +40,7 @@ public class Fenetre extends JFrame {
 	private static final int HAUTEUR = 600;
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String NOM_APPLICATION = "Télépath";
+	private static final String NOM_AUTEUR = "Aymerik ABOSO";
 	private static final String VERSION = "0.2";
 	private static final String NOM_FENETRE = NOM_APPLICATION + " V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
@@ -114,6 +115,10 @@ public class Fenetre extends JFrame {
 
 	public void effacer() {
 		this.setVisible(false);
+	}
+	
+	public static String getNomAuteur() {
+		return NOM_AUTEUR;
 	}
 
 	public static String getNomApplication() {
@@ -194,7 +199,7 @@ public class Fenetre extends JFrame {
 		final Dimension DIMENSION_BOUTON_INSCRIPTION = new Dimension(200, 30); //largeur, hauteur
 		final String TEXTE_BOUTON_ACTIVER_COMPTE = "Activer un compte";
 		final Dimension DIMENSION_BOUTON_ACTIVER_COMPTE = new Dimension(200, 30); //largeur, hauteur
-		final String LABEL_IDENTIFIANT = "Identifiant       ";
+		final String LABEL_IDENTIFIANT = "<html><i><font size=\"5\">Identifiant</i></font>&nbsp&nbsp&nbsp</html>";
 		final Dimension DIMENSION_PASSWORD_FIELD = new Dimension(230, 30);
 		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 250);
 		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, /*100*/60);
@@ -240,9 +245,13 @@ public class Fenetre extends JFrame {
 			e.printStackTrace();
 		}
 		labelIdentifiant.setForeground(COULEUR_LABEL_INSCRIPTION);
-		ImageIcon logo = new ImageIcon(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO);
 		JLabel labelImage = new JLabel();
-		labelImage.setIcon(logo);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO));
+			labelImage.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JPasswordField idPasswordField = new JPasswordField();
 		idPasswordField.setPreferredSize(DIMENSION_PASSWORD_FIELD);
 

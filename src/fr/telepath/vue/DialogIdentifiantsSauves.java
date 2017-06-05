@@ -21,7 +21,7 @@ import fr.telepath.modele.IdentifiantSauve;
 
 public class DialogIdentifiantsSauves extends JDialog {
 	private static final long serialVersionUID = 1L;
-	private static final Dimension DIMENSION_DIALOG = new Dimension(600, 600);
+	private static final Dimension DIMENSION_DIALOG = new Dimension(500, 300);
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final Color COULEUR_FOND = new Color(199, 249, 226);
 	
@@ -52,7 +52,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 		super(fenetreParent, nom, modal);
 		this.fenetreParent = fenetreParent;
 		setSize(DIMENSION_DIALOG.width, DIMENSION_DIALOG.height);
-		setLocationRelativeTo(fenetreParent);
+		setLocationRelativeTo(this.fenetreParent);
 		setResizable(REDIMENSIONNABLE);
 		
 		this.contenu = this.getContentPane();

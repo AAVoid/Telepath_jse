@@ -26,9 +26,9 @@ import fr.telepath.controleur.EcouteurDialogInscription;
 public class DialogInscription extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static final Dimension DIMENSION_DIALOG = new Dimension(300, 150);
-	private static final String LABEL_IDENTIFIANT = "Identifiant       ";
+	private static final String LABEL_IDENTIFIANT = "<html><i>Identifiant</i>&nbsp&nbsp&nbsp</html>";
 	private static final boolean REDIMENSIONNABLE = false;
-	private static final String LABEL_EMAIL = "E-Mail       ";
+	private static final String LABEL_EMAIL = "<html><i>E-Mail</i>&nbsp&nbsp&nbsp</html>";
 	private static final String LABEL_BOUTON_VALIDER = "Valider";
 	private static final String LABEL_BOUTON_ANNULER = "Annuler";
 	private static final Dimension DIMENSION_CHAMP_ID = new Dimension(190, 30);

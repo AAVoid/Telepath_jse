@@ -25,7 +25,7 @@ import fr.telepath.controleur.EcouteurDialogActivation;
 public class DialogActivation extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static final Dimension DIMENSION_DIALOG = new Dimension(300, 100);
-	private static final String LABEL_CODE = "Code ";
+	private static final String LABEL_CODE = "<html><i>Code</i>&nbsp&nbsp&nbsp</html>";
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String LABEL_BOUTON_VALIDER = "Valider";
 	private static final String LABEL_BOUTON_ANNULER = "Annuler";
