@@ -22,7 +22,7 @@ import fr.telepath.modele.PanneauIdentifiantSauve;
 
 public class DialogIdentifiantsSauves extends JDialog {
 	private static final long serialVersionUID = 1L;
-	private static final Dimension DIMENSION_DIALOG = new Dimension(500, 300);
+	private static final Dimension DIMENSION_DIALOG = new Dimension(700, 300);
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final Color COULEUR_FOND = new Color(199, 249, 226);
 	
@@ -44,6 +44,10 @@ public class DialogIdentifiantsSauves extends JDialog {
 		this.setVisible(false);
 	}
 	
+	public static Dimension getDimensionDialog() {
+		return DIMENSION_DIALOG;
+	}
+
 	//Lit les identifiants sauvegardés dans le fichier SQLite
 	private void chargerListeIdSQLITE() {
 		this.listeIdentifiants = Controleur.chargerIdentifiantsSauve();
@@ -72,7 +76,10 @@ public class DialogIdentifiantsSauves extends JDialog {
 		//chargement des identifiants sauvegardés depuis le fichier SQLite
 		chargerListeIdSQLITE();
 		
-		contenu.add(new PanneauIdentifiantSauve(this, this.listeIdentifiants.get(0)));
+		/*for(IdentifiantSauve ident : this.listeIdentifiants)
+			System.out.println(ident.getId() + " / " + ident.getLabel());*/
+		
+		contenu.add(new PanneauIdentifiantSauve(this, this.listeIdentifiants.get(0)), BorderLayout.CENTER);
 	}
 }
 
