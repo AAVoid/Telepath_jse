@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 
 import fr.telepath.controleur.Controleur;
 import fr.telepath.modele.IdentifiantSauve;
+import fr.telepath.modele.PanneauIdentifiantSauve;
 
 
 
@@ -70,6 +71,8 @@ public class DialogIdentifiantsSauves extends JDialog {
 		
 		//chargement des identifiants sauvegardés depuis le fichier SQLite
 		chargerListeIdSQLITE();
+		
+		contenu.add(new PanneauIdentifiantSauve(this, this.listeIdentifiants.get(0)));
 	}
 }
 

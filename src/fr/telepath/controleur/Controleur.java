@@ -13,7 +13,7 @@ import fr.telepath.modele.donnees.SingletonConnectionSQLITE;
 
 
 
-//CONTROLEUR AUTRE QUE LES ECOUTEUR
+//CONTROLEUR AUTRE QUE LES ECOUTEURS
 public class Controleur {
 	public static ArrayList<IdentifiantSauve> chargerIdentifiantsSauve() {
 		ArrayList<IdentifiantSauve> listeIdentifiants = new ArrayList<IdentifiantSauve>();

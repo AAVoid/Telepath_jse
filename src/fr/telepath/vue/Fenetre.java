@@ -305,7 +305,7 @@ public class Fenetre extends JFrame {
 
 		JPanel p2 = new JPanel();
 		p2.setOpaque(false);
-		p2.setLayout(new GridLayout(2, 1));
+		p2.setLayout(new GridLayout(2, 1)); //2 lignes une colonne
 		panneauBackground.add(p2, BorderLayout.CENTER);
 
 		JPanel p3 = new JPanel();
