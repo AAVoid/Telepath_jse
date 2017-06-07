@@ -10,6 +10,9 @@ import java.security.NoSuchAlgorithmException;
 
 //Classe implémentant le chiffrement Alpha que j'ai créé
 //Alpha est un algorithme de chiffrement symétrique par bloc
+//LA VERSION DE ALPHA IMPLEMENTEE ICI N'EST QUE LA VERSION "RAPIDE"
+//ALPHA POUR LE CHIFFREMENT DE FICHIERS (NON PRESENTE ICI) EST DIFFERENTE DE
+//LA METHODE CI-DESSOUS
 public class Alpha {
 	private static final int SALT_XOR = 13 + 14 + 17;
 

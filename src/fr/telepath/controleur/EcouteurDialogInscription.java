@@ -17,13 +17,13 @@ import fr.telepath.vue.DialogInscription;
 
 
 public class EcouteurDialogInscription implements ActionListener {
-	private static final String NOM_POPUP_INSC_REUSSI = "Inscription reussi !";
-	private static final String MESSAGE_INSC_REUSSI = "Inscription reussi !\nUn mail vous a ete envoye !\n\n"
+	private static final String NOM_POPUP_INSC_REUSSI = "Inscription réussi !";
+	private static final String MESSAGE_INSC_REUSSI = "Inscription réussi !\nUn mail vous a été envoyé !\n\n"
 			+ "Vous pouvez activer votre compte via le lien dans le mail.\n"
-			+ "\nVous pouvez aussi recuperer le code d'activation a la fin du lien\n"
-			+ "(apres ''activation='') et le saisir dans l'application.";
+			+ "\nVous pouvez aussi récupérer le code d'activation à la fin du lien\n"
+			+ "(après \"activation=\") et le saisir dans l'application.";
 	private static final String NOM_POPUP_INSC_ECHEC = "Echec de l'inscription !";
-	private static final String MESSAGE_INSC_ECHEC = "Une erreur est survenue ! L'inscription a echoue !";
+	private static final String MESSAGE_INSC_ECHEC = "Une erreur est survenue ! L'inscription a échoué !";
 	private static final String NOM_POP_UP_CTRL_CHAMPS_WARNING_1 = "Attention !";
 	private static final String MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1 = "Veuillez renseigner tous les champs !";
 	private static final String NOM_POP_UP_CTRL_CHAMPS_WARNING_2 = "Attention !";

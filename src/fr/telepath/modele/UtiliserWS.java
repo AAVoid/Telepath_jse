@@ -20,7 +20,7 @@ public class UtiliserWS {
 	
 	
 	public static String utiliserService(String u) throws Exception{
-		System.out.println(u);
+		//System.out.println(u);
 		String t = "";
 		//Creation des objets
 		URL url = new URL(u);

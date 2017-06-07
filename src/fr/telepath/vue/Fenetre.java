@@ -206,7 +206,7 @@ public class Fenetre extends JFrame {
 		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, /*200*/150);
 		final String NOM_IMAGE_BACKGROUND = "background.jpg";
 		final Color COULEUR_LABEL_INSCRIPTION = new Color(255, 255, 255);
-		final String TEXTE_BOUTON_IDENTIFIANTS_SAUVES = "Identifiant(s) sauvegarde(s)";
+		final String TEXTE_BOUTON_IDENTIFIANTS_SAUVES = "Gestionnaire d'identifiants";
 		final String NOM_ICONE_INSCRIPTION = "groupe.png";
 		final String NOM_ICONE_ACTIVATION = "ok.png";
 		final String NOM_ICONE_ID_SAUVES = "utilisateur.png";
