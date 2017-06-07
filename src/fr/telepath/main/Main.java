@@ -9,6 +9,12 @@ import fr.telepath.vue.Fenetre;
 
 public class Main {
 	public static void main(String[] args) {
+		//Changer le thème
+		/*try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}*/
 		Fenetre fenetre = new Fenetre();
 		//fenetre.afficherSplashScreen();
 		fenetre.afficher();
