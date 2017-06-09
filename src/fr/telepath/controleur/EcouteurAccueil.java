@@ -20,7 +20,7 @@ import fr.telepath.vue.Fenetre;
 public class EcouteurAccueil implements ActionListener {
 	private static final String NOM_DIALOG_INSCRIPTION = "Inscription";
 	private static final String NOM_DIALOG_ACTIVATION = "Activation de compte";
-	private static final String NOM_DIALOG_IDENTIFIANTS_SAUVES = "Identifiants sauvegardes";
+	private static final String NOM_DIALOG_IDENTIFIANTS_SAUVES = "Identifiants sauvegardés";
 	private static final boolean DIALOG_MODAL = true;
 	
 	private int id;
