@@ -1,4 +1,4 @@
-package fr.telepath.modele;
+package fr.telepath.vue;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fr.telepath.vue.DialogIdentifiantsSauves;
+import fr.telepath.modele.IdentifiantSauve;
 
 
 
@@ -30,7 +30,7 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private static final Dimension DIMENSION_CHAMP_LABEL = new Dimension(230, 30);
 	private static final Dimension DIMENSION_BOUTON_CONNECTER = new Dimension(200, 30);
 	private static final Dimension DIMENSION_BOUTON_SUPPRIMER = new Dimension(200, 30);
-	private static final Color COULEUR_BORDURE = new Color(255, 0, 100);
+	private static final Color COULEUR_BORDURE = new Color(66, 152, 244);
 	private static final String NOM_BORDURE = "";
 	private static final Dimension DIMENSION_PANNEAUX_MARGE = 
 			new Dimension(DialogIdentifiantsSauves.getDimensionDialog().width, 100);

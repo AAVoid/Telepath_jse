@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 
 import fr.telepath.controleur.Controleur;
 import fr.telepath.modele.IdentifiantSauve;
-import fr.telepath.modele.PanneauIdentifiantSauve;
 
 
 
