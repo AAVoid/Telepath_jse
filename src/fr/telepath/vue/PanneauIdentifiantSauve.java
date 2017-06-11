@@ -90,10 +90,10 @@ public class PanneauIdentifiantSauve extends JPanel {
 		panneauMargeBas.setOpaque(false);
 		panneauMargeBas.setPreferredSize(DIMENSION_PANNEAUX_MARGE);
 		
-		this.add(panneauMargeHaut);
+		//this.add(panneauMargeHaut);
 		this.add(panneauHaut);
-		this.add(panneauBas);	
-		this.add(panneauMargeBas);
+		this.add(panneauBas);
+		//this.add(panneauMargeBas);
 		
 		//Ecouteur
 	}
