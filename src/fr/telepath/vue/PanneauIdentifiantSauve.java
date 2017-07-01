@@ -4,13 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.File;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.telepath.controleur.EcouteurPanneauIdentifiantSauve;
 import fr.telepath.modele.IdentifiantSauve;
 
 
@@ -22,8 +28,8 @@ import fr.telepath.modele.IdentifiantSauve;
 
 public class PanneauIdentifiantSauve extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private static final String LABEL_IDENTIFIANT = "Identifiant";
-	private static final String LABEL_LABEL = "Label";
+	private static final String LABEL_IDENTIFIANT = "<html><font size=\"5\">Identifiant</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</html>";
+	private static final String LABEL_LABEL = "<html><font size=\"5\">Label</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</html>";
 	private static final String TEXTE_BOUTON_CONNECTER = "Se connecter";
 	private static final String TEXTE_BOUTON_SUPPRIMER = "Supprimer";
 	private static final Dimension DIMENSION_CHAMP_IDENTIFIANT = new Dimension(230, 30);
@@ -33,10 +39,14 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private static final Color COULEUR_BORDURE = new Color(66, 152, 244);
 	private static final String NOM_BORDURE = "";
 	private static final Dimension DIMENSION_PANNEAUX_MARGE = 
-			new Dimension(DialogIdentifiantsSauves.getDimensionDialog().width, 100);
-	
+			new Dimension(DialogIdentifiantsSauves.getDimensionDialog().width, 10);
+	private static final Color COULEUR_FOND = new Color(199, 249, 226);
+	private static final String NOM_ICONE_CONNECTER = "connecterId.png";
+	private static final String NOM_ICONE_SUPPRIMER = "supprimerId.png";
+
 	private DialogIdentifiantsSauves dialogParent; //Pour pouvoir lancer l'actualisation
 	//de l'affichage dans la dialog parent
+	private ArrayList<IdentifiantSauve> listeIdentifiants;
 	private IdentifiantSauve identifiantAssocie;
 	private JTextField identifiant;
 	private JTextField label;
@@ -44,11 +54,12 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private JLabel labelLabel;
 	private JButton boutonConnecter;
 	private JButton boutonSupprimer;
-	
+
 	public PanneauIdentifiantSauve(DialogIdentifiantsSauves dialogParent, 
-			IdentifiantSauve identifiantAssocie) {
+			ArrayList<IdentifiantSauve> listeIdentifiants, IdentifiantSauve identifiantAssocie) {
 		super();
 		this.dialogParent = dialogParent;
+		this.listeIdentifiants = listeIdentifiants;
 		this.identifiantAssocie = identifiantAssocie;
 		this.identifiant = new JTextField(identifiantAssocie.getId());
 		this.label = new JTextField(identifiantAssocie.getLabel());
@@ -56,47 +67,87 @@ public class PanneauIdentifiantSauve extends JPanel {
 		this.labelLabel = new JLabel(LABEL_LABEL);
 		this.boutonConnecter = new JButton(TEXTE_BOUTON_CONNECTER);
 		this.boutonSupprimer = new JButton(TEXTE_BOUTON_SUPPRIMER);
-		
+
+		this.setBackground(COULEUR_FOND);
+
 		//Ajout bordure
 		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(COULEUR_BORDURE), NOM_BORDURE));
-		
+
 		this.identifiant.setPreferredSize(DIMENSION_CHAMP_IDENTIFIANT);
 		this.label.setPreferredSize(DIMENSION_CHAMP_LABEL);
 		this.boutonConnecter.setPreferredSize(DIMENSION_BOUTON_CONNECTER);
+		try {
+			Image img = ImageIO.read(new File(Fenetre.getNomDossierIcone() + NOM_ICONE_CONNECTER));
+			this.boutonConnecter.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.boutonSupprimer.setPreferredSize(DIMENSION_BOUTON_SUPPRIMER);
-		
-		setLayout(new GridLayout(4, 1)); //4 ligne 1 colonne
+		try {
+			Image img = ImageIO.read(new File(Fenetre.getNomDossierIcone() + NOM_ICONE_SUPPRIMER));
+			this.boutonSupprimer.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		setLayout(new GridLayout(5, 1)); //3 ligne 1 colonne
 		setOpaque(false); 
-		
+
 		JPanel panneauMargeHaut = new JPanel();
-		panneauMargeHaut.setOpaque(false);
+		panneauMargeHaut.setBackground(COULEUR_FOND);
 		panneauMargeHaut.setPreferredSize(DIMENSION_PANNEAUX_MARGE);
-		
+
 		JPanel panneauHaut = new JPanel();
-		panneauHaut.setOpaque(false);
+		panneauHaut.setBackground(COULEUR_FOND);
 		panneauHaut.setLayout(new FlowLayout());
 		panneauHaut.add(this.labelIdentifiant);
 		panneauHaut.add(this.identifiant);
-		panneauHaut.add(this.labelLabel);
-		panneauHaut.add(this.label);
-		
+
+		JPanel panneauMilieu = new JPanel();
+		panneauMilieu.setBackground(COULEUR_FOND);
+		panneauMilieu.setLayout(new FlowLayout());
+		panneauMilieu.add(this.labelLabel);
+		panneauMilieu.add(this.label);
+
 		JPanel panneauBas = new JPanel();
-		panneauBas.setOpaque(false);
+		panneauBas.setBackground(COULEUR_FOND);
 		panneauBas.setLayout(new FlowLayout());
 		panneauBas.add(this.boutonConnecter);
 		panneauBas.add(this.boutonSupprimer);
-		
+
 		JPanel panneauMargeBas = new JPanel();
-		panneauMargeBas.setOpaque(false);
+		panneauMargeBas.setBackground(COULEUR_FOND);
 		panneauMargeBas.setPreferredSize(DIMENSION_PANNEAUX_MARGE);
-		
+
 		//this.add(panneauMargeHaut);
+		this.add(panneauMargeHaut);
 		this.add(panneauHaut);
+		this.add(panneauMilieu);
 		this.add(panneauBas);
-		//this.add(panneauMargeBas);
-		
+		this.add(panneauMargeBas);
+
 		//Ecouteur
+		boutonConnecter.addActionListener(new EcouteurPanneauIdentifiantSauve(this.dialogParent, 1, 
+				this.listeIdentifiants, this.identifiantAssocie));
+		boutonSupprimer.addActionListener(new EcouteurPanneauIdentifiantSauve(this.dialogParent, 2, 
+				this.listeIdentifiants, this.identifiantAssocie));
 	}
+
+	public JTextField getIdentifiant() {
+		return identifiant;
+	}
+
+	/*public void setIdentifiant(JTextField identifiant) {
+		this.identifiant = identifiant;
+	}*/
+
+	public JTextField getLabel() {
+		return label;
+	}
+
+	/*public void setLabel(JTextField label) {
+		this.label = label;
+	}*/
 }
 
 

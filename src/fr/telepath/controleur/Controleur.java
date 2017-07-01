@@ -21,6 +21,16 @@ public class Controleur {
 		listeIdentifiants = daoId.lireTable();
 		return listeIdentifiants;
 	}
+	
+	public static boolean viderIdentifiantsSauve() {
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		return daoId.truncateTable();
+	}
+	
+	public static boolean sauverIdentifiantsSauve(ArrayList<IdentifiantSauve> listeIdentifiants) {
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		return daoId.chargerTable(listeIdentifiants);
+	}
 }
 
 

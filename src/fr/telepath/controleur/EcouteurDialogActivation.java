@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -39,10 +41,11 @@ public class EcouteurDialogActivation implements ActionListener {
 	private static final String MESSAGE_INFORMATION_GESTIONNAIRE = "Vous pouvez enregistrer votre identifiant dans le gestionnaire\n"
 			+ "d'identifiants pour éviter de le retaper.";
 	private static final String CHEMIN_FICHIER_IDENTIFIANT_SAUVEGARDE = 
-			FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath() + File.separator + "identifiant.txt";
+			FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath() + File.separator + "identifiant";
+	private static final String EXTENSION_FICHIER_SAUVEGARDE = ".txt";
 	private static final String NOM_POPUP_FICHIER_IDENTIFIANT_CREE = "Identifiant sauvegardé !";
-	private static final String MESSAGE_POPUP_FICHIER_IDENTIFIANT_CREE = "Votre identifiant a été sauvegardé dans le fichier : \n\n"
-			+ CHEMIN_FICHIER_IDENTIFIANT_SAUVEGARDE;
+	private static final String MESSAGE_POPUP_FICHIER_IDENTIFIANT_CREE = "Votre identifiant a été sauvegardé dans le fichier : \n\n";
+	private static final String FORMAT_DATE_FICHIER_IDENTIFIANT = "EEE dd MMM yyyy - HH'h'mm'm'ss's'"; 
 
 	private int id;
 	private DialogActivation dialog;
@@ -92,8 +95,10 @@ public class EcouteurDialogActivation implements ActionListener {
 				System.out.println(home.getAbsolutePath());
 				System.out.println(System.getProperty("user.home"));*/
 				FileOutputStream fichIdentifiantsSav = null;
+				SimpleDateFormat formatDate = new SimpleDateFormat(FORMAT_DATE_FICHIER_IDENTIFIANT);
+				String nomFichier = CHEMIN_FICHIER_IDENTIFIANT_SAUVEGARDE + "_" + formatDate.format(new Date()) + EXTENSION_FICHIER_SAUVEGARDE;
 				try {
-					fichIdentifiantsSav = new FileOutputStream(CHEMIN_FICHIER_IDENTIFIANT_SAUVEGARDE);
+					fichIdentifiantsSav = new FileOutputStream(nomFichier);
 				} 
 				catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -105,7 +110,7 @@ public class EcouteurDialogActivation implements ActionListener {
 				catch (IOException e) {
 					e.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(this.dialog, MESSAGE_POPUP_FICHIER_IDENTIFIANT_CREE, 
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_POPUP_FICHIER_IDENTIFIANT_CREE + nomFichier, 
 						NOM_POPUP_FICHIER_IDENTIFIANT_CREE, JOptionPane.INFORMATION_MESSAGE);
 				dialog.effacer();
 			}

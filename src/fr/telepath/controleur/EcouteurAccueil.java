@@ -3,6 +3,7 @@ package fr.telepath.controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import fr.telepath.vue.DialogActivation;
@@ -22,6 +23,11 @@ public class EcouteurAccueil implements ActionListener {
 	private static final String NOM_DIALOG_ACTIVATION = "Activation de compte";
 	private static final String NOM_DIALOG_IDENTIFIANTS_SAUVES = "Identifiants sauvegardés";
 	private static final boolean DIALOG_MODAL = true;
+	private static final String NOM_POPUP_INFO_ID_SAUVES = "Informations";
+	private static final String MESSAGE_POPUP_INFO_ID_SAUVES = "Vous pouvez gérer vos identifiants dans la fenêtre "
+			+ "de gestion des identifiants.\n\nProcessus : Suppressions / Ajouts éventuels, édition puis enregistrement\n\n"
+			+ "En effet :\nSi vous éditez un identifiant pour ensuite le supprimer ou supprimer un autre identifiant\n"
+			+ "sans avoir enregistré après l'édition vous devrez resaisir les informations du ou des identifiants édités / ajoutés !";
 	
 	private int id;
 	private Fenetre fenetre;
@@ -50,6 +56,9 @@ public class EcouteurAccueil implements ActionListener {
 			dialogActivation.afficher();
 			break;
 		case 4: //Bouton identifiants sauvés
+			//Affichage informations
+			JOptionPane.showMessageDialog(this.fenetre, MESSAGE_POPUP_INFO_ID_SAUVES, 
+					NOM_POPUP_INFO_ID_SAUVES, JOptionPane.INFORMATION_MESSAGE);
 			DialogIdentifiantsSauves dialogIdentifiantsSauves = new DialogIdentifiantsSauves(fenetre, 
 					NOM_DIALOG_IDENTIFIANTS_SAUVES, DIALOG_MODAL, passwordField);
 			dialogIdentifiantsSauves.afficher();
