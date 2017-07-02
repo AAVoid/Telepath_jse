@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+import fr.telepath.modele.UtiliserWS;
 import fr.telepath.vue.DialogActivation;
 import fr.telepath.vue.DialogIdentifiantsSauves;
 import fr.telepath.vue.DialogInscription;
@@ -28,6 +29,10 @@ public class EcouteurAccueil implements ActionListener {
 			+ "de gestion des identifiants.\n\nProcessus : Suppressions / Ajouts éventuels, édition puis enregistrement\n\n"
 			+ "En effet :\nSi vous éditez un identifiant pour ensuite le supprimer ou supprimer un autre identifiant\n"
 			+ "sans avoir enregistré après l'édition vous devrez resaisir les informations du ou des identifiants édités / ajoutés !";
+	private static final String NOM_POPUP_CONNEXION_ECHEC = "Erreur de connexion";
+	private static final String MESSAGE_POPUP_CONNEXION_ECHEC = "Erreur de connexion !\n\nVotre identifiant est "
+			+ "peut-être incorrect."
+			+ "\nLe système est peut-être indisponible.\n\nVeuillez essayer de vous connecter de nouveau.";
 	
 	private int id;
 	private Fenetre fenetre;
@@ -45,7 +50,21 @@ public class EcouteurAccueil implements ActionListener {
 		switch(this.id){
 		case 1: //Bouton connexion
 			String identifiant = new String(passwordField.getPassword());
-			System.out.println("CONNEXION ID = " + identifiant);
+			String reponse = "";
+			try {
+				reponse = UtiliserWS.serviceObtenirParametres(identifiant);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			//Parsage JSON
+			int rep = UtiliserWS.getReponse(reponse);
+			if(rep == 1) { //Connecté
+				
+			}
+			else { //La connexion a échoué
+				JOptionPane.showMessageDialog(this.fenetre, MESSAGE_POPUP_CONNEXION_ECHEC, 
+						NOM_POPUP_CONNEXION_ECHEC, JOptionPane.ERROR_MESSAGE);
+			}
 			break;
 		case 2: //Bouton inscription
 			DialogInscription dialogInscription = new DialogInscription(fenetre, NOM_DIALOG_INSCRIPTION, DIALOG_MODAL);

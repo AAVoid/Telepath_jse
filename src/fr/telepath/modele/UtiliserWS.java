@@ -84,6 +84,12 @@ public class UtiliserWS {
 		}
 		return id;
 	}
+	
+	public static String serviceObtenirParametres(String idUser) throws Exception {
+		String url = URL_SERVEUR;
+		url += "wal.php?identifiant=" + idUser + "";
+		return utiliserService(url);
+	}
 }
 
 

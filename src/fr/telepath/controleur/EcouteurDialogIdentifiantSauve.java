@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import fr.telepath.modele.IdentifiantSauve;
 import fr.telepath.vue.DialogIdentifiantsSauves;
 
@@ -15,6 +17,9 @@ import fr.telepath.vue.DialogIdentifiantsSauves;
 
 
 public class EcouteurDialogIdentifiantSauve implements ActionListener {
+	private static final String NOM_POPUP_ENREGISTREMENT_FAIT = "Enregistrement effectué";
+	private static final String MESSAGE_POPUP_ENREGISTREMENT_FAIT = "Enregistrement des identifiants effectué !";
+	
 	private int idAction;
 	private DialogIdentifiantsSauves dialogIdSav;
 	private ArrayList<IdentifiantSauve> listeIdentifiants;
@@ -41,6 +46,8 @@ public class EcouteurDialogIdentifiantSauve implements ActionListener {
 			Controleur.sauverIdentifiantsSauve(listeCree);
 			this.dialogIdSav.setListeIdentifiants(listeCree);
 			this.dialogIdSav.actualiserAffichage();
+			JOptionPane.showMessageDialog(this.dialogIdSav, MESSAGE_POPUP_ENREGISTREMENT_FAIT, 
+					NOM_POPUP_ENREGISTREMENT_FAIT, JOptionPane.INFORMATION_MESSAGE);
 			break;
 		}
 	}

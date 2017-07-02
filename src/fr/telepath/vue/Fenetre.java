@@ -41,7 +41,7 @@ public class Fenetre extends JFrame {
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String NOM_APPLICATION = "Télépath";
 	private static final String NOM_AUTEUR = "Aymerik ABOSO";
-	private static final String VERSION = "0.2";
+	private static final String VERSION = "0.6";
 	private static final String NOM_FENETRE = NOM_APPLICATION + " V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";
@@ -59,6 +59,7 @@ public class Fenetre extends JFrame {
 	private JMenu menuEntryAProposDe;
 	private JMenuItem menuItemOrigine;
 	private JMenuItem menuItemEsprit;
+	private static String identifiantUser; //Identifiant de l'utilisateur une fois connecté
 
 	public Fenetre() {
 		super();
@@ -183,6 +184,14 @@ public class Fenetre extends JFrame {
 
 	public static String getNomImageCurseur() {
 		return NOM_IMAGE_CURSEUR;
+	}
+
+	public static String getIdentifiantUser() {
+		return identifiantUser;
+	}
+
+	public static void setIdentifiantUser(String identifiantUser) {
+		Fenetre.identifiantUser = identifiantUser;
 	}
 
 	//COPIE DE CHAINE DANS LE PRESSE PAPIER
