@@ -41,8 +41,8 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private static final Dimension DIMENSION_PANNEAUX_MARGE = 
 			new Dimension(DialogIdentifiantsSauves.getDimensionDialog().width, 10);
 	private static final Color COULEUR_FOND = new Color(199, 249, 226);
-	private static final String NOM_ICONE_CONNECTER = "connecterId.png";
-	private static final String NOM_ICONE_SUPPRIMER = "supprimerId.png";
+	private static final String NOM_ICONE_CONNECTER = "valider.png";
+	private static final String NOM_ICONE_SUPPRIMER = "annuler.png";
 
 	private DialogIdentifiantsSauves dialogParent; //Pour pouvoir lancer l'actualisation
 	//de l'affichage dans la dialog parent

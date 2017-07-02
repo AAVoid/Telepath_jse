@@ -5,8 +5,12 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -32,6 +36,8 @@ public class DialogActivation extends JDialog {
 	private static final Dimension DIMENSION_CHAMP_CODE = new Dimension(225, 30);
 	private static final String NOM_IMAGE_BACKGROUND = "background2.jpg";
 	private static final Color COULEUR_LABEL_CODE = new Color(255, 255, 255);
+	private static final String NOM_ICONE_VALIDER = "valider.png";
+	private static final String NOM_ICONE_ANNULER = "annuler.png";
 	
 	private Container contenu;
 	
@@ -68,7 +74,19 @@ public class DialogActivation extends JDialog {
 		JLabel labelCode = new JLabel(LABEL_CODE);
 		labelCode.setForeground(COULEUR_LABEL_CODE);
 		JButton boutonValider = new JButton(LABEL_BOUTON_VALIDER);
+		try {
+			Image img = ImageIO.read(new File(Fenetre.getNomDossierIcone() + NOM_ICONE_VALIDER));
+			boutonValider.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JButton boutonAnnuler = new JButton(LABEL_BOUTON_ANNULER);
+		try {
+			Image img = ImageIO.read(new File(Fenetre.getNomDossierIcone() + NOM_ICONE_ANNULER));
+			boutonAnnuler.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JTextField champCode = new JTextField();
 		champCode.setPreferredSize(DIMENSION_CHAMP_CODE);
 		
