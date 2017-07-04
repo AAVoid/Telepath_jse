@@ -85,12 +85,12 @@ public class Fenetre extends JFrame {
 		this.menuItemOrigine.addActionListener(new EcouteurJMenu(this, 1));
 		this.menuItemEsprit = new JMenuItem(NOM_MENU_A_PROPOS_DE_ESPRIT_DE_TELEPATH);
 		this.menuItemEsprit.addActionListener(new EcouteurJMenu(this, 2));
-		
+
 		this.menuEntryAProposDe.add(this.menuItemOrigine);
 		this.menuEntryAProposDe.add(this.menuItemEsprit);
 		this.menuBar.add(this.menuEntryAProposDe);
 		setJMenuBar(this.menuBar);
-		
+
 		afficherPageAccueil();
 	}
 
@@ -107,6 +107,7 @@ public class Fenetre extends JFrame {
 
 	public void updateAffichage() {
 		this.contenu.validate();
+		this.contenu.repaint();
 	}
 
 	public void afficher() {
@@ -117,7 +118,7 @@ public class Fenetre extends JFrame {
 	public void effacer() {
 		this.setVisible(false);
 	}
-	
+
 	public static String getNomAuteur() {
 		return NOM_AUTEUR;
 	}
@@ -211,8 +212,8 @@ public class Fenetre extends JFrame {
 		final String LABEL_IDENTIFIANT = "<html><i><font size=\"5\">Identifiant</i></font>&nbsp&nbsp&nbsp</html>";
 		final Dimension DIMENSION_PASSWORD_FIELD = new Dimension(230, 30);
 		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 250);
-		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, /*100*/60);
-		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, /*200*/150);
+		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 60);
+		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, 150);
 		final String NOM_IMAGE_BACKGROUND = "background.jpg";
 		final Color COULEUR_LABEL_INSCRIPTION = new Color(255, 255, 255);
 		final String TEXTE_BOUTON_IDENTIFIANTS_SAUVES = "Gestionnaire d'identifiants";
@@ -270,6 +271,7 @@ public class Fenetre extends JFrame {
 		boutonIdentifiantsSauves.addActionListener(new EcouteurAccueil(this, 4, idPasswordField));
 
 		contenu.removeAll(); //On efface la content pane
+		contenu.setLayout(new BorderLayout());
 
 		JPanel panneauBackground = null;
 		try {
@@ -332,6 +334,46 @@ public class Fenetre extends JFrame {
 		p2.add(p4);
 
 		updateAffichage();
+	}
+
+	//PAGE LISTE AMIS
+	public void afficherListeAmis() {
+		final Color COULEUR_BORDURE = new Color(66, 152, 244);
+		final Color COULEUR_FOND = new Color(199, 249, 226);
+		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 250);
+		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 60);
+		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, 150);
+		
+		contenu.removeAll(); //On efface la content pane
+		contenu.setLayout(new BorderLayout());
+		
+		JLabel labelImage = new JLabel();
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO));
+			labelImage.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JPanel pLogo = new JPanel();
+		contenu.add(pLogo, BorderLayout.NORTH);
+		pLogo.setOpaque(true);
+		pLogo.setBackground(COULEUR_FOND);
+		pLogo.setLayout(new BorderLayout());
+		pLogo.setPreferredSize(DIMENSION_PLOGO);
+		JPanel pLogoUp = new JPanel();
+		pLogoUp.setOpaque(true);
+		pLogoUp.setBackground(COULEUR_FOND);
+		pLogoUp.setPreferredSize(DIMENSION_PLOGO_UP); //Pour faire descendre l'image
+		pLogo.add(pLogoUp, BorderLayout.NORTH);
+		JPanel pImage = new JPanel();
+		pImage.setOpaque(true);
+		pImage.setBackground(COULEUR_FOND);
+		pImage.setLayout(new FlowLayout(FlowLayout.CENTER)); //ajout au centre (pour éviter que 
+		//le bouton prenne toute la place
+		pImage.add(labelImage);
+		pLogo.add(pImage, BorderLayout.CENTER);
+		
+		this.updateAffichage();
 	}
 }
 

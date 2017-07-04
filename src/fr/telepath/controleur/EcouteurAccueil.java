@@ -59,7 +59,9 @@ public class EcouteurAccueil implements ActionListener {
 			//Parsage JSON
 			int rep = UtiliserWS.getReponse(reponse);
 			if(rep == 1) { //Connecté
-				
+				Fenetre.setIdentifiantUser(identifiant); //Enregistrement de l'identifiant pour la suite
+				System.out.println(identifiant);
+				this.fenetre.afficherListeAmis();
 			}
 			else { //La connexion a échoué
 				JOptionPane.showMessageDialog(this.fenetre, MESSAGE_POPUP_CONNEXION_ECHEC, 

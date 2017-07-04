@@ -47,6 +47,7 @@ public class DialogInscription extends JDialog {
 	
 	public void updateAffichage() {
 		this.contenu.validate();
+		this.contenu.repaint();
 	}
 
 	public void afficher() {
