@@ -23,9 +23,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
+import fr.telepath.modele.Conversation;
 
 
 
@@ -41,7 +43,7 @@ public class Fenetre extends JFrame {
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String NOM_APPLICATION = "Télépath";
 	private static final String NOM_AUTEUR = "Aymerik ABOSO";
-	private static final String VERSION = "0.6";
+	private static final String VERSION = "0.7";
 	private static final String NOM_FENETRE = NOM_APPLICATION + " V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";
@@ -59,7 +61,6 @@ public class Fenetre extends JFrame {
 	private JMenu menuEntryAProposDe;
 	private JMenuItem menuItemOrigine;
 	private JMenuItem menuItemEsprit;
-	private static String identifiantUser; //Identifiant de l'utilisateur une fois connecté
 
 	public Fenetre() {
 		super();
@@ -185,14 +186,6 @@ public class Fenetre extends JFrame {
 
 	public static String getNomImageCurseur() {
 		return NOM_IMAGE_CURSEUR;
-	}
-
-	public static String getIdentifiantUser() {
-		return identifiantUser;
-	}
-
-	public static void setIdentifiantUser(String identifiantUser) {
-		Fenetre.identifiantUser = identifiantUser;
 	}
 
 	//COPIE DE CHAINE DANS LE PRESSE PAPIER
@@ -340,12 +333,13 @@ public class Fenetre extends JFrame {
 	public void afficherListeAmis() {
 		final Color COULEUR_BORDURE = new Color(66, 152, 244);
 		final Color COULEUR_FOND = new Color(199, 249, 226);
-		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 250);
-		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 60);
-		final Dimension DIMENSION_PSOUTH_UP = new Dimension(Fenetre.LARGEUR, 150);
+		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 110);
+		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
+		final Dimension DIMENSION_PLOGO_DOWN = new Dimension(Fenetre.LARGEUR, 5);
 		
-		contenu.removeAll(); //On efface la content pane
+		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
+		//contenu.setBackground(COULEUR_FOND);
 		
 		JLabel labelImage = new JLabel();
 		try {
@@ -360,6 +354,7 @@ public class Fenetre extends JFrame {
 		pLogo.setBackground(COULEUR_FOND);
 		pLogo.setLayout(new BorderLayout());
 		pLogo.setPreferredSize(DIMENSION_PLOGO);
+		
 		JPanel pLogoUp = new JPanel();
 		pLogoUp.setOpaque(true);
 		pLogoUp.setBackground(COULEUR_FOND);
@@ -372,6 +367,16 @@ public class Fenetre extends JFrame {
 		//le bouton prenne toute la place
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
+		
+		/*JPanel pLogoDown = new JPanel();
+		pLogoDown.setOpaque(true);
+		pLogoDown.setBackground(COULEUR_FOND);
+		pLogoDown.setPreferredSize(DIMENSION_PLOGO_DOWN);
+		pLogo.add(pLogoDown, BorderLayout.SOUTH);*/
+		
+		JPanel panneauListeAmis; //scrolling fait sur ce panneau
+		JScrollPane scrollPane; //Pour le scrolling
+		contenu.add(new JButton(Conversation.getIdentifiantUtilisateur() + " / " + Conversation.getIdentiteUtilisateur()), BorderLayout.CENTER);
 		
 		this.updateAffichage();
 	}

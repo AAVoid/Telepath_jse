@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+import fr.telepath.modele.Conversation;
 import fr.telepath.modele.UtiliserWS;
 import fr.telepath.vue.DialogActivation;
 import fr.telepath.vue.DialogIdentifiantsSauves;
@@ -59,8 +60,9 @@ public class EcouteurAccueil implements ActionListener {
 			//Parsage JSON
 			int rep = UtiliserWS.getReponse(reponse);
 			if(rep == 1) { //Connecté
-				Fenetre.setIdentifiantUser(identifiant); //Enregistrement de l'identifiant pour la suite
-				System.out.println(identifiant);
+				Conversation.setIdentifiantUtilisateur(identifiant); //Enregistrement de l'identifiant pour la suite
+				String identite = UtiliserWS.getIdentiteApresParametre(reponse);
+				Conversation.setIdentiteUtilisateur(identite);
 				this.fenetre.afficherListeAmis();
 			}
 			else { //La connexion a échoué

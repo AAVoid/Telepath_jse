@@ -90,6 +90,22 @@ public class UtiliserWS {
 		url += "wal.php?identifiant=" + idUser + "";
 		return utiliserService(url);
 	}
+	
+	public static String getIdentiteApresParametre(String jsonString) {
+		JSONObject jo = null;
+		try {
+			jo = new JSONObject(jsonString);
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		}
+		String reponse = "";
+		try {
+			reponse = jo.getString("identite");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		return reponse;
+	}
 }
 
 
