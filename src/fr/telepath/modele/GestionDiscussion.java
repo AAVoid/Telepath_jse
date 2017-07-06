@@ -8,7 +8,7 @@ package fr.telepath.modele;
 
 
 //Classe utilisée pour la gestion des conversations
-public class Conversation {
+public class GestionDiscussion {
 	private static String identifiantUtilisateur; //Identifiant de l'utilisateur une fois connecté
 	private static String identiteUtilisateur; //Identite de l'utilisateur
 
@@ -17,7 +17,7 @@ public class Conversation {
 	}
 
 	public static void setIdentifiantUtilisateur(String identifiantUtilisateur) {
-		Conversation.identifiantUtilisateur = identifiantUtilisateur;
+		GestionDiscussion.identifiantUtilisateur = identifiantUtilisateur;
 	}
 
 	public static String getIdentiteUtilisateur() {
@@ -25,7 +25,7 @@ public class Conversation {
 	}
 
 	public static void setIdentiteUtilisateur(String identiteUtilisateur) {
-		Conversation.identiteUtilisateur = identiteUtilisateur;
+		GestionDiscussion.identiteUtilisateur = identiteUtilisateur;
 	}
 }
 

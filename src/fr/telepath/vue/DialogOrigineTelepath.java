@@ -26,8 +26,9 @@ public class DialogOrigineTelepath extends JDialog {
 	private static final String TEXTE = 
 			"<html>"
 			+ "<h1>Origine de <i>" + Fenetre.getNomApplication() + "</i></h1>"
-			+ "<i>" + Fenetre.getNomApplication() + " </i>est une application de discussion créée entièrement par <i><br><font size=\"4\">" + Fenetre.getNomAuteur() + "</font></i>.<br>" 
-			+ "Elle a été réalisée en 2017 dans le cadre d'un projet universitaire de "
+			+ "<i>" + Fenetre.getNomApplication() + " </i>est une application de discussion créée par <i><br><font size=\"4\">" + Fenetre.getNomAuteur() + "</font></i>.<br>" 
+			+ "Une partie de la réalisation a été faite par son professeur, monsieur<br>Jimmy NAGAU.<br>"
+			+ Fenetre.getNomApplication() + " a été réalisée en 2017 dans le cadre d'un projet universitaire de "
 			+ "<br><i>Master 1 MIAGE de l'université des Antilles en Guadeloupe (Caraïbes).</i>"
 			+ "</html>";
 

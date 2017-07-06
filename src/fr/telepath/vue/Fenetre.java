@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
-import fr.telepath.modele.Conversation;
+import fr.telepath.modele.GestionDiscussion;
 
 
 
@@ -376,7 +376,7 @@ public class Fenetre extends JFrame {
 		
 		JPanel panneauListeAmis; //scrolling fait sur ce panneau
 		JScrollPane scrollPane; //Pour le scrolling
-		contenu.add(new JButton(Conversation.getIdentifiantUtilisateur() + " / " + Conversation.getIdentiteUtilisateur()), BorderLayout.CENTER);
+		contenu.add(new JButton(GestionDiscussion.getIdentifiantUtilisateur() + " / " + GestionDiscussion.getIdentiteUtilisateur()), BorderLayout.CENTER);
 		
 		this.updateAffichage();
 	}
