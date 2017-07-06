@@ -50,7 +50,7 @@ public class EcouteurAccueil implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		switch(this.id){
 		case 1: //Bouton connexion
-			String identifiant = new String(passwordField.getPassword());
+			String identifiant = (new String(passwordField.getPassword())).replaceAll(" ", "");
 			String reponse = "";
 			try {
 				reponse = UtiliserWS.serviceObtenirParametres(identifiant);

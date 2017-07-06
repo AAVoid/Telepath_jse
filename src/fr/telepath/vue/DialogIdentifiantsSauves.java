@@ -151,7 +151,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 	public ArrayList<IdentifiantSauve> creerListeIdFromContenu() {
 		ArrayList<IdentifiantSauve> listeIdentifiants = new ArrayList<IdentifiantSauve>();
 		for(Component comp : this.panneauId.getComponents()) {
-			listeIdentifiants.add(new IdentifiantSauve(((PanneauIdentifiantSauve)comp).getIdentifiant().getText(), 
+			listeIdentifiants.add(new IdentifiantSauve(((PanneauIdentifiantSauve)comp).getIdentifiant().getText().replaceAll(" ", ""), 
 					((PanneauIdentifiantSauve)comp).getLabel().getText()));
 		}
 		return listeIdentifiants;
