@@ -36,6 +36,7 @@ import fr.telepath.controleur.Controleur;
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
 import fr.telepath.controleur.EcouteurListeAmis;
+import fr.telepath.controleur.EcouteurListeAmisDiscussion;
 import fr.telepath.modele.Ami;
 import fr.telepath.modele.GestionDiscussion;
 
@@ -353,8 +354,8 @@ public class Fenetre extends JFrame {
 		final String NOM_ICONE_BOUTON_AJOUTER_AMI = "ajouterAmi.png";
 		final String TEXTE_BONJOUR_UTILISATEUR = "<html><font size=\"4\">Bonjour <font size=\"6\"><i>" 
 				+ GestionDiscussion.getIdentiteUtilisateur() + "</i></font></font> !<br>"
-						+ "<font size=\"6\">Votre liste d'amis</font></html>";
-		final Dimension DIMENSION_BOUTON_AMI = new Dimension(Fenetre.LARGEUR - 20, 40);
+				+ "<font size=\"6\">Votre liste d'amis</font></html>";
+		final Dimension DIMENSION_BOUTON_AMI = new Dimension(Fenetre.LARGEUR - 40, 40);
 		final int ESPACE_ENTRE_AMIS = 10;
 		final String NOM_ICONE_DISCUTER_AMI = "discuter.png";
 
@@ -390,7 +391,7 @@ public class Fenetre extends JFrame {
 		//le bouton prenne toute la place
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
-		JPanel pLogoBonjourUtilisateur = new JPanel(); /*Panneau sur lequel est affichée
+		JPanel pLogoBonjourUtilisateur = new JPanel(); /*Panneau sur lequel est affichée l'identitée de l'utilisateur
 		l'identité de l'utilisateur*/
 		pLogoBonjourUtilisateur.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pLogoBonjourUtilisateur.setOpaque(true);
@@ -399,7 +400,7 @@ public class Fenetre extends JFrame {
 		JLabel labelBonjourUtilisateur = new JLabel(TEXTE_BONJOUR_UTILISATEUR);
 		pLogoBonjourUtilisateur.add(labelBonjourUtilisateur);
 
-				JPanel panneauSouth = new JPanel();
+		JPanel panneauSouth = new JPanel();
 		panneauSouth.setOpaque(true);
 		//panneauSouth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panneauSouth.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
@@ -437,7 +438,7 @@ public class Fenetre extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
 		contenu.add(scrollPane, BorderLayout.CENTER);
-		
+
 		ArrayList<Ami> listeAmis = Controleur.obtenirListeAmis(this, GestionDiscussion.getIdentifiantUtilisateur());
 		panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
 		for(Ami a : listeAmis) {
@@ -451,9 +452,132 @@ public class Fenetre extends JFrame {
 			boutonAmi.setMinimumSize(DIMENSION_BOUTON_AMI);
 			boutonAmi.setMaximumSize(DIMENSION_BOUTON_AMI);
 			boutonAmi.setAlignmentX(Component.CENTER_ALIGNMENT);
+			//Ecouteur
+			boutonAmi.addActionListener(new EcouteurListeAmisDiscussion(a, this));
 			panneauListeAmis.add(boutonAmi);
 			panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
 		}
+
+		this.updateAffichage();
+	}
+
+	//PAGE DE DISCUSSION
+	public void afficherDiscussion(Ami ami) {
+		final Color COULEUR_FOND = new Color(199, 249, 226);
+		final Color COULEUR_FOND_PANNEAU_HAUT_BAS = new Color(160, 196, 255);
+		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 140);
+		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
+		final String TEXTE_BOUTON_ENVOI_MESSAGE = "Envoyer";
+		final String TEXTE_BOUTON_AJOUTER_AMI = "Ajouter un ami";
+		final Dimension DIMENSION_BOUTON_DECONNEXION = new Dimension(200, 30); //largeur, hauteur
+		final Dimension DIMENSION_BOUTON_AJOUTER_AMI = new Dimension(200, 30);
+		final String NOM_ICONE_BOUTON_ENVOI_MESSAGE = "envoyerMessage.png";
+		final String NOM_ICONE_BOUTON_AJOUTER_AMI = "ajouterAmi.png";
+		final String TEXTE_IDENTITE_CORRESPONDANT = "<html><font size=\"6\"><i>" 
+				+ ami.getIdentite() + "</i></font></html>";
+		final Dimension DIMENSION_BOUTON_AMI = new Dimension(Fenetre.LARGEUR - 40, 40);
+		final int ESPACE_ENTRE_AMIS = 10;
+		final String NOM_ICONE_DISCUTER_AMI = "discuter.png";
+
+		contenu.removeAll();
+		contenu.setLayout(new BorderLayout());
+		contenu.setBackground(COULEUR_FOND);
+
+		//HAUT ET BAS
+		JLabel labelImage = new JLabel();
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO));
+			labelImage.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JPanel pLogo = new JPanel();
+		//pLogo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		contenu.add(pLogo, BorderLayout.NORTH);
+		pLogo.setOpaque(true);
+		pLogo.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		pLogo.setLayout(new BorderLayout());
+		pLogo.setPreferredSize(DIMENSION_PLOGO);
+
+		JPanel pLogoUp = new JPanel();
+		pLogoUp.setOpaque(true);
+		pLogoUp.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		pLogoUp.setPreferredSize(DIMENSION_PLOGO_UP); //Pour faire descendre l'image
+		pLogo.add(pLogoUp, BorderLayout.NORTH);
+		JPanel pImage = new JPanel();
+		pImage.setOpaque(true);
+		pImage.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		pImage.setLayout(new FlowLayout(FlowLayout.CENTER)); //ajout au centre (pour éviter que 
+		//le bouton prenne toute la place
+		pImage.add(labelImage);
+		pLogo.add(pImage, BorderLayout.CENTER);
+		JPanel pIdentiteAmi = new JPanel(); /*Panneau sur lequel est affichée
+			l'identité de l'utilisateur*/
+		pIdentiteAmi.setLayout(new FlowLayout(FlowLayout.LEFT));
+		pIdentiteAmi.setOpaque(true);
+		pIdentiteAmi.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		pLogo.add(pIdentiteAmi, BorderLayout.SOUTH);
+		JLabel labelIdentiteCorrespondant = new JLabel(TEXTE_IDENTITE_CORRESPONDANT);
+		pIdentiteAmi.add(labelIdentiteCorrespondant);
+
+		JPanel panneauSouth = new JPanel();
+		panneauSouth.setOpaque(true);
+		//panneauSouth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		panneauSouth.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		panneauSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JButton boutonEnvoiMessage = new JButton(TEXTE_BOUTON_DECONNEXION);
+		boutonEnvoiMessage.setPreferredSize(DIMENSION_BOUTON_DECONNEXION);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_ENVOI_MESSAGE));
+			boutonEnvoiMessage.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//boutonQuitterDiscussion.addActionListener(new EcouteurListeAmis(this, 1));
+		JButton boutonQuitterDiscussion = new JButton(TEXTE_BOUTON_AJOUTER_AMI);
+		boutonQuitterDiscussion.setPreferredSize(DIMENSION_BOUTON_AJOUTER_AMI);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_AJOUTER_AMI));
+			boutonQuitterDiscussion.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//boutonAjouterAmi.addActionListener(new EcouteurListeAmis(this, 2));
+		panneauSouth.add(boutonDeconnexion);
+		pIdentiteAmi.add(boutonAjouterAmi);
+		contenu.add(panneauSouth, BorderLayout.SOUTH);
+
+		/*//Messages
+		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
+		JPanel panneauListeAmis = new JPanel(); //scrolling fait sur ce panneau
+		panneauListeAmis.setOpaque(true);
+		panneauListeAmis.setBackground(COULEUR_FOND);
+		LayoutManager boxLayout = new BoxLayout(panneauListeAmis, BoxLayout.Y_AXIS); //Vertical
+		panneauListeAmis.setLayout(boxLayout);
+
+		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
+		scrollPane.setBorder(bordureInvisible);
+		contenu.add(scrollPane, BorderLayout.CENTER);
+
+		ArrayList<Ami> listeAmis = Controleur.obtenirListeAmis(this, GestionDiscussion.getIdentifiantUtilisateur());
+		panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
+		for(Ami a : listeAmis) {
+			JButton boutonAmi = new JButton(a.getIdentite());
+			try {
+				Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_DISCUTER_AMI));
+				boutonAmi.setIcon(new ImageIcon(img));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			boutonAmi.setMinimumSize(DIMENSION_BOUTON_AMI);
+			boutonAmi.setMaximumSize(DIMENSION_BOUTON_AMI);
+			boutonAmi.setAlignmentX(Component.CENTER_ALIGNMENT);
+			//Ecouteur
+			boutonAmi.addActionListener(new EcouteurListeAmisDiscussion(a, this));
+			panneauListeAmis.add(boutonAmi);
+			panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
+		}*/
+
 		this.updateAffichage();
 	}
 }

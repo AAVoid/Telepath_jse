@@ -40,7 +40,6 @@ public class DialogActivation extends JDialog {
 	private static final String NOM_ICONE_ANNULER = "annuler.png";
 	
 	private Container contenu;
-	private Fenetre fenetre;
 	
 	public void updateAffichage() {
 		this.contenu.validate();
@@ -58,7 +57,6 @@ public class DialogActivation extends JDialog {
 
 	public DialogActivation(Fenetre fenetreParent, String nom, boolean modal){
 		super(fenetreParent, nom, modal);
-		this.fenetre = fenetreParent;
 		setSize(DIMENSION_DIALOG.width, DIMENSION_DIALOG.height);
 		setLocationRelativeTo(fenetreParent);
 		setResizable(REDIMENSIONNABLE);
