@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.telepath.modele.GestionDiscussion;
+import fr.telepath.vue.DialogAjoutAmi;
 import fr.telepath.vue.Fenetre;
 
 
@@ -14,6 +15,9 @@ import fr.telepath.vue.Fenetre;
 
 
 public class EcouteurListeAmis implements ActionListener {
+	private static final String NOM_DIALOG_AJOUT_AMI = "Ajout d'un ami";
+	private static final boolean DIALOG_MODAL = true;
+	
 	private int id;
 	private Fenetre fenetre;
 	
@@ -32,7 +36,8 @@ public class EcouteurListeAmis implements ActionListener {
 			this.fenetre.afficherPageAccueil();
 			break;
 		case 2: //BOUTON AJOUTER UN AMI
-			
+			DialogAjoutAmi dialogAjoutAmi = new DialogAjoutAmi(fenetre, NOM_DIALOG_AJOUT_AMI, DIALOG_MODAL);
+			dialogAjoutAmi.afficher();
 			break;
 		}
 	}

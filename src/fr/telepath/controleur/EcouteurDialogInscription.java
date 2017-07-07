@@ -49,16 +49,16 @@ public class EcouteurDialogInscription implements ActionListener {
 		case 1: //Bouton Valider
 			//Vérification des champs
 			if(champIdentite.getText().isEmpty() || champEMail.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1, NOM_POP_UP_CTRL_CHAMPS_WARNING_1, JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1, NOM_POP_UP_CTRL_CHAMPS_WARNING_1, JOptionPane.WARNING_MESSAGE);
 				break;
 			}
 			if(!champEMail.getText().matches(REGEX_EMAIL)) {
-				JOptionPane.showMessageDialog(null, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_2, NOM_POP_UP_CTRL_CHAMPS_WARNING_2, JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_2, NOM_POP_UP_CTRL_CHAMPS_WARNING_2, JOptionPane.WARNING_MESSAGE);
 				break;
 			}
 			String reponse = "";
 			try {
-				reponse = UtiliserWS.serviceInscription(champIdentite.getText(), champEMail.getText());
+				reponse = UtiliserWS.serviceInscription(champIdentite.getText().replaceAll(" ", ""), champEMail.getText().replaceAll(" ", ""));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -66,11 +66,11 @@ public class EcouteurDialogInscription implements ActionListener {
 			int rep = UtiliserWS.getReponse(reponse);
 			//Affichage résultat
 			if(rep == 1) {
-				JOptionPane.showMessageDialog(null, MESSAGE_INSC_REUSSI, NOM_POPUP_INSC_REUSSI, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_INSC_REUSSI, NOM_POPUP_INSC_REUSSI, JOptionPane.INFORMATION_MESSAGE);
 				dialog.effacer();
 			}
 			else if(rep == 0)
-				JOptionPane.showMessageDialog(null, MESSAGE_INSC_ECHEC, NOM_POPUP_INSC_ECHEC, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_INSC_ECHEC, NOM_POPUP_INSC_ECHEC, JOptionPane.ERROR_MESSAGE);
 			break;
 		case 2: //Bouton Annuler
 			dialog.effacer();

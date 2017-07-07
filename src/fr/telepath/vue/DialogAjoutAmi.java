@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fr.telepath.controleur.EcouteurDialogActivation;
+import fr.telepath.controleur.EcouteurDialogAjoutAmi;
 
 
 
@@ -26,16 +26,16 @@ import fr.telepath.controleur.EcouteurDialogActivation;
 
 
 
-public class DialogActivation extends JDialog {
+public class DialogAjoutAmi extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static final Dimension DIMENSION_DIALOG = new Dimension(300, 110);
-	private static final String LABEL_CODE = "<html><i>Code</i>&nbsp&nbsp&nbsp</html>";
+	private static final String LABEL_EMAIL = "<html><i>E-mail</i>&nbsp&nbsp&nbsp</html>";
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String LABEL_BOUTON_VALIDER = "Valider";
 	private static final String LABEL_BOUTON_ANNULER = "Annuler";
-	private static final Dimension DIMENSION_CHAMP_CODE = new Dimension(225, 30);
+	private static final Dimension DIMENSION_CHAMP_EMAIL = new Dimension(225, 30);
 	private static final String NOM_IMAGE_BACKGROUND = "background2.jpg";
-	private static final Color COULEUR_LABEL_CODE = new Color(255, 255, 255);
+	private static final Color COULEUR_LABEL_EMAIL = new Color(255, 255, 255);
 	private static final String NOM_ICONE_VALIDER = "valider.png";
 	private static final String NOM_ICONE_ANNULER = "annuler.png";
 	
@@ -55,8 +55,8 @@ public class DialogActivation extends JDialog {
 	public void effacer() {
 		this.setVisible(false);
 	}
-
-	public DialogActivation(Fenetre fenetreParent, String nom, boolean modal){
+	
+	public DialogAjoutAmi(Fenetre fenetreParent, String nom, boolean modal){
 		super(fenetreParent, nom, modal);
 		this.fenetre = fenetreParent;
 		setSize(DIMENSION_DIALOG.width, DIMENSION_DIALOG.height);
@@ -74,8 +74,8 @@ public class DialogActivation extends JDialog {
 		panneauBackground.setLayout(new BorderLayout());
 		this.contenu.add(panneauBackground, BorderLayout.CENTER);
 		
-		JLabel labelCode = new JLabel(LABEL_CODE);
-		labelCode.setForeground(COULEUR_LABEL_CODE);
+		JLabel labelEMail = new JLabel(LABEL_EMAIL);
+		labelEMail.setForeground(COULEUR_LABEL_EMAIL);
 		JButton boutonValider = new JButton(LABEL_BOUTON_VALIDER);
 		try {
 			Image img = ImageIO.read(new File(Fenetre.getNomDossierIcone() + NOM_ICONE_VALIDER));
@@ -90,17 +90,17 @@ public class DialogActivation extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JTextField champCode = new JTextField();
-		champCode.setPreferredSize(DIMENSION_CHAMP_CODE);
+		JTextField champEmail = new JTextField();
+		champEmail.setPreferredSize(DIMENSION_CHAMP_EMAIL);
 		
-		boutonValider.addActionListener(new EcouteurDialogActivation(this, 1, champCode));
-		boutonAnnuler.addActionListener(new EcouteurDialogActivation(this, 2, null));
+		boutonValider.addActionListener(new EcouteurDialogAjoutAmi(this, 1, champEmail));
+		boutonAnnuler.addActionListener(new EcouteurDialogAjoutAmi(this, 2, null));
 		
 		JPanel p1 = new JPanel();
 		p1.setOpaque(false);
 		p1.setLayout(new FlowLayout(FlowLayout.CENTER));
-		p1.add(labelCode);
-		p1.add(champCode);
+		p1.add(labelEMail);
+		p1.add(champEmail);
 		
 		
 		JPanel p2 = new JPanel();
@@ -112,12 +112,16 @@ public class DialogActivation extends JDialog {
 		panneauBackground.add(p1, BorderLayout.CENTER);
 		panneauBackground.add(p2, BorderLayout.SOUTH);
 	}
+
+	public Fenetre getFenetre() {
+		return fenetre;
+	}
+
+	@SuppressWarnings("unused")
+	private void setFenetre(Fenetre fenetre) {
+		this.fenetre = fenetre;
+	}
 }
-
-
-
-
-
 
 
 

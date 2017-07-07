@@ -34,6 +34,8 @@ public class EcouteurAccueil implements ActionListener {
 	private static final String MESSAGE_POPUP_CONNEXION_ECHEC = "Erreur de connexion !\n\nVotre identifiant est "
 			+ "peut-être incorrect."
 			+ "\nLe système est peut-être indisponible.\n\nVeuillez essayer de vous connecter de nouveau.";
+	private static final String NOM_POP_UP_CTRL_CHAMPS_WARNING_1 = "Attention !";
+	private static final String MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1 = "Veuillez renseigner l'identifiant de connexion !";
 	
 	private int id;
 	private Fenetre fenetre;
@@ -50,7 +52,12 @@ public class EcouteurAccueil implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		switch(this.id){
 		case 1: //Bouton connexion
+			
 			String identifiant = (new String(passwordField.getPassword())).replaceAll(" ", "");
+			if(identifiant.isEmpty()) {
+				JOptionPane.showMessageDialog(this.fenetre, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1, NOM_POP_UP_CTRL_CHAMPS_WARNING_1, JOptionPane.WARNING_MESSAGE);
+				break;
+			}
 			String reponse = "";
 			try {
 				reponse = UtiliserWS.serviceObtenirParametres(identifiant);

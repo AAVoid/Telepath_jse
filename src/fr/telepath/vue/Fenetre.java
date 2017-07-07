@@ -2,6 +2,7 @@ package fr.telepath.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,9 +14,11 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,9 +32,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
+import fr.telepath.controleur.Controleur;
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
 import fr.telepath.controleur.EcouteurListeAmis;
+import fr.telepath.modele.Ami;
 import fr.telepath.modele.GestionDiscussion;
 
 
@@ -336,10 +341,9 @@ public class Fenetre extends JFrame {
 
 	//PAGE LISTE AMIS
 	public void afficherListeAmis() {
-		final Color COULEUR_BORDURE = new Color(66, 152, 244);
 		final Color COULEUR_FOND = new Color(199, 249, 226);
 		final Color COULEUR_FOND_PANNEAU_HAUT_BAS = new Color(160, 196, 255);
-		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 150);
+		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 170);
 		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
 		final String TEXTE_BOUTON_DECONNEXION = "Se déconnecter";
 		final String TEXTE_BOUTON_AJOUTER_AMI = "Ajouter un ami";
@@ -347,8 +351,12 @@ public class Fenetre extends JFrame {
 		final Dimension DIMENSION_BOUTON_AJOUTER_AMI = new Dimension(200, 30);
 		final String NOM_ICONE_BOUTON_DECONNEXION = "deconnexion.png";
 		final String NOM_ICONE_BOUTON_AJOUTER_AMI = "ajouterAmi.png";
-		final String TEXTE_BONJOUR_UTILISATEUR = "<html><font size=\"4\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bonjour <font size=\"6\">" 
-				+ GestionDiscussion.getIdentiteUtilisateur() + "</font></font> !</html>";
+		final String TEXTE_BONJOUR_UTILISATEUR = "<html><font size=\"4\">Bonjour <font size=\"6\"><i>" 
+				+ GestionDiscussion.getIdentiteUtilisateur() + "</i></font></font> !<br>"
+						+ "<font size=\"6\">Votre liste d'amis</font></html>";
+		final Dimension DIMENSION_BOUTON_AMI = new Dimension(Fenetre.LARGEUR - 20, 40);
+		final int ESPACE_ENTRE_AMIS = 10;
+		final String NOM_ICONE_DISCUTER_AMI = "discuter.png";
 
 		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
@@ -419,7 +427,6 @@ public class Fenetre extends JFrame {
 		contenu.add(panneauSouth, BorderLayout.SOUTH);
 
 		//LISTE D'AMIS
-
 		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
 		JPanel panneauListeAmis = new JPanel(); //scrolling fait sur ce panneau
 		panneauListeAmis.setOpaque(true);
@@ -430,7 +437,23 @@ public class Fenetre extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
 		contenu.add(scrollPane, BorderLayout.CENTER);
-
+		
+		ArrayList<Ami> listeAmis = Controleur.obtenirListeAmis(this, GestionDiscussion.getIdentifiantUtilisateur());
+		panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
+		for(Ami a : listeAmis) {
+			JButton boutonAmi = new JButton(a.getIdentite());
+			try {
+				Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_DISCUTER_AMI));
+				boutonAmi.setIcon(new ImageIcon(img));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			boutonAmi.setMinimumSize(DIMENSION_BOUTON_AMI);
+			boutonAmi.setMaximumSize(DIMENSION_BOUTON_AMI);
+			boutonAmi.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panneauListeAmis.add(boutonAmi);
+			panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
+		}
 		this.updateAffichage();
 	}
 }

@@ -8,11 +8,11 @@ package fr.telepath.modele;
 
 
 //Information obtenu via le listing des relation de l'utilisateur connecté
-public class Ami {
+public class Ami implements Comparable<Ami> {
 	private String identite;
 	private int identifiantRelation;
 	private int identifiant;
-	
+
 	public Ami(String identite, int identifiantRelation, int identifiant) {
 		super();
 		this.identite = identite;
@@ -46,6 +46,13 @@ public class Ami {
 	private void setIdentifiant(int identifiant) {
 		this.identifiant = identifiant;
 	}
+
+	@Override
+	public int compareTo(Ami o) {
+		return this.identite.compareTo(o.getIdentite());
+	}
+
+
 }
 
 

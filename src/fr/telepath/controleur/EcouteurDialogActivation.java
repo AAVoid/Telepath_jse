@@ -64,12 +64,12 @@ public class EcouteurDialogActivation implements ActionListener {
 		case 1: //Bouton Valider
 			//Vérification des champs
 			if(champCode.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1, NOM_POP_UP_CTRL_CHAMPS_WARNING_1, JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this.dialog, MESSAGE_POP_UP_CTRL_CHAMPS_WARNING_1, NOM_POP_UP_CTRL_CHAMPS_WARNING_1, JOptionPane.WARNING_MESSAGE);
 				break;
 			}
 			String reponse = "";
 			try {
-				reponse = UtiliserWS.serviceActivation(champCode.getText());
+				reponse = UtiliserWS.serviceActivation(champCode.getText().replaceAll(" ", ""));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

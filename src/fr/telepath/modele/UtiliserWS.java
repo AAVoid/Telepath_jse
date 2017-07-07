@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,8 +20,8 @@ import org.json.JSONObject;
 
 public class UtiliserWS {
 	private static final String URL_SERVEUR = "http://ns4004962.ip-198-27-65.net/applications/WAL/";
-	
-	
+
+
 	public static String utiliserService(String u) throws Exception{
 		//System.out.println(u);
 		String t = "";
@@ -34,19 +37,19 @@ public class UtiliserWS {
 		con.disconnect();
 		return t;
 	}
-	
+
 	public static String serviceInscription(String identite, String eMail) throws Exception {
 		String url = URL_SERVEUR;
 		url += "wal.php?inscription&identite=" + identite + "&mail=" + eMail + "";
 		return utiliserService(url);
 	}
-	
+
 	public static String serviceActivation(String identifiantActivation) throws Exception {
 		String url = URL_SERVEUR;
 		url += "wal.php?activation=" + identifiantActivation + "";
 		return utiliserService(url);
 	}
-	
+
 	public static int getReponse(String jsonString) {
 		JSONObject jo = null;
 		try {
@@ -68,7 +71,7 @@ public class UtiliserWS {
 		}*/
 		return reponse;
 	}
-	
+
 	public static String getIdApresActivation(String jsonString) {
 		JSONObject jo = null;
 		try {
@@ -84,13 +87,13 @@ public class UtiliserWS {
 		}
 		return id;
 	}
-	
+
 	public static String serviceObtenirParametres(String idUser) throws Exception {
 		String url = URL_SERVEUR;
 		url += "wal.php?identifiant=" + idUser + "";
 		return utiliserService(url);
 	}
-	
+
 	public static String getIdentiteApresParametre(String jsonString) {
 		JSONObject jo = null;
 		try {
@@ -105,6 +108,44 @@ public class UtiliserWS {
 			e1.printStackTrace();
 		}
 		return reponse;
+	}
+
+	public static String serviceListerRelation(String idUser) throws Exception {
+		String url = URL_SERVEUR;
+		url += "wal.php?identifiant=" + idUser + "&relations";
+		return utiliserService(url);
+	}
+
+	public static ArrayList<Ami> lireListeAmisApresListage(ArrayList<Ami> listeAmis, String jsonString) {
+		JSONObject jo = null;
+		JSONArray tab = null;
+		try {
+			jo = new JSONObject(jsonString);
+			tab = jo.getJSONArray("relations");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		String identiteAmi = "";
+		int identifiantRelationAmi = 0;
+		int identifiantAmi = 0;
+		for(int i = 0 ; i < tab.length() ; i++) {
+			try {
+				identifiantRelationAmi = tab.getJSONObject(i).getInt("relation");
+				identifiantAmi = tab.getJSONObject(i).getInt("identifiant");
+				identiteAmi = tab.getJSONObject(i).getString("identite");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			listeAmis.add(new Ami(identiteAmi, identifiantRelationAmi, identifiantAmi));
+		}
+		Collections.sort(listeAmis);
+		return listeAmis;
+	}
+	
+	public static String serviceAjoutAmi(String idUser, String emailAmi) throws Exception {
+		String url = URL_SERVEUR;
+		url += "wal.php?identifiant=" + idUser + "&lier&mail=" + emailAmi +"";
+		return utiliserService(url);
 	}
 }
 
