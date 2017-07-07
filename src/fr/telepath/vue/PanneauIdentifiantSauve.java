@@ -40,7 +40,6 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private static final String NOM_BORDURE = "";
 	private static final Dimension DIMENSION_PANNEAUX_MARGE = 
 			new Dimension(DialogIdentifiantsSauves.getDimensionDialog().width, 10);
-	private static final Color COULEUR_FOND = new Color(199, 249, 226);
 	private static final String NOM_ICONE_CONNECTER = "valider.png";
 	private static final String NOM_ICONE_SUPPRIMER = "annuler.png";
 
@@ -56,7 +55,7 @@ public class PanneauIdentifiantSauve extends JPanel {
 	private JButton boutonSupprimer;
 
 	public PanneauIdentifiantSauve(DialogIdentifiantsSauves dialogParent, 
-			ArrayList<IdentifiantSauve> listeIdentifiants, IdentifiantSauve identifiantAssocie) {
+			ArrayList<IdentifiantSauve> listeIdentifiants, IdentifiantSauve identifiantAssocie, Color couleur_fond) {
 		super();
 		this.dialogParent = dialogParent;
 		this.listeIdentifiants = listeIdentifiants;
@@ -67,8 +66,6 @@ public class PanneauIdentifiantSauve extends JPanel {
 		this.labelLabel = new JLabel(LABEL_LABEL);
 		this.boutonConnecter = new JButton(TEXTE_BOUTON_CONNECTER);
 		this.boutonSupprimer = new JButton(TEXTE_BOUTON_SUPPRIMER);
-
-		this.setBackground(COULEUR_FOND);
 
 		//Ajout bordure
 		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(COULEUR_BORDURE), NOM_BORDURE));
@@ -89,34 +86,35 @@ public class PanneauIdentifiantSauve extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		setBackground(couleur_fond);
 		setLayout(new GridLayout(5, 1)); //3 ligne 1 colonne
-		setOpaque(false); 
+		setOpaque(true); 
 
 		JPanel panneauMargeHaut = new JPanel();
-		panneauMargeHaut.setBackground(COULEUR_FOND);
+		panneauMargeHaut.setBackground(couleur_fond);
 		panneauMargeHaut.setPreferredSize(DIMENSION_PANNEAUX_MARGE);
 
 		JPanel panneauHaut = new JPanel();
-		panneauHaut.setBackground(COULEUR_FOND);
+		panneauHaut.setBackground(couleur_fond);
 		panneauHaut.setLayout(new FlowLayout());
 		panneauHaut.add(this.labelIdentifiant);
 		panneauHaut.add(this.identifiant);
 
 		JPanel panneauMilieu = new JPanel();
-		panneauMilieu.setBackground(COULEUR_FOND);
+		panneauMilieu.setBackground(couleur_fond);
 		panneauMilieu.setLayout(new FlowLayout());
 		panneauMilieu.add(this.labelLabel);
 		panneauMilieu.add(this.label);
 
 		JPanel panneauBas = new JPanel();
-		panneauBas.setBackground(COULEUR_FOND);
+		panneauBas.setBackground(couleur_fond);
 		panneauBas.setLayout(new FlowLayout());
 		panneauBas.add(this.boutonConnecter);
 		panneauBas.add(this.boutonSupprimer);
 
 		JPanel panneauMargeBas = new JPanel();
-		panneauMargeBas.setBackground(COULEUR_FOND);
+		panneauMargeBas.setBackground(couleur_fond);
 		panneauMargeBas.setPreferredSize(DIMENSION_PANNEAUX_MARGE);
 
 		//this.add(panneauMargeHaut);

@@ -36,6 +36,8 @@ public class DialogIdentifiantsSauves extends JDialog {
 	private static final Dimension DIMENSION_DIALOG = new Dimension(700, 400);
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final Color COULEUR_FOND = new Color(199, 249, 226);
+	private static final Color COULEUR_FOND2 = new Color(160, 196, 255);
+	private static final Color COULEUR_FOND_PANNEAU_BAS = new Color(30, 115, 252);
 	private static final String TEXTE_BOUTON_AJOUTER = "Ajouter";
 	private static final String TEXTE_BOUTON_ENREGISTRER = "Enregistrer";
 	private static final Dimension DIMENSION_BOUTON_AJOUTER = new Dimension(200, 30);
@@ -93,7 +95,7 @@ public class DialogIdentifiantsSauves extends JDialog {
 
 		this.panneauId = new JPanel();
 		this.panneauId.setBackground(COULEUR_FOND);
-		this.panneauId.setOpaque(false);
+		this.panneauId.setOpaque(true);
 		//BoxLayout
 		LayoutManager boxLayout = new BoxLayout(this.panneauId, BoxLayout.Y_AXIS); //Vertical
 		this.panneauId.setLayout(boxLayout);
@@ -117,8 +119,8 @@ public class DialogIdentifiantsSauves extends JDialog {
 		}
 		
 		JPanel panneauSud = new JPanel();
-		panneauSud.setOpaque(false);
-		panneauSud.setBackground(COULEUR_FOND);
+		panneauSud.setOpaque(true);
+		panneauSud.setBackground(COULEUR_FOND_PANNEAU_BAS);
 		panneauSud.setLayout(new FlowLayout());
 		panneauSud.add(this.boutonAjouter);
 		panneauSud.add(this.boutonEnregistrer);
@@ -139,8 +141,11 @@ public class DialogIdentifiantsSauves extends JDialog {
 	//Ajoute les panneaux dans la fenêtre en fonction du contenu de la liste d'identifiants actuelle
 	public void actualiserAffichage() {
 		this.panneauId.removeAll();
+		int couleur = 0;
 		for(IdentifiantSauve idAssocie : this.listeIdentifiants) {
-			this.panneauId.add(new PanneauIdentifiantSauve(this, this.listeIdentifiants, idAssocie));
+			this.panneauId.add(new PanneauIdentifiantSauve(this, this.listeIdentifiants, idAssocie,
+					(couleur == 0) ? COULEUR_FOND : COULEUR_FOND2));
+			couleur = ++couleur % 2;
 		}
 		this.validate();
 		this.repaint();

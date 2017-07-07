@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,10 +27,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
-import fr.telepath.modele.GestionDiscussion;
 
 
 
@@ -335,11 +338,13 @@ public class Fenetre extends JFrame {
 		final Color COULEUR_FOND = new Color(199, 249, 226);
 		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 110);
 		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
-		final Dimension DIMENSION_PLOGO_DOWN = new Dimension(Fenetre.LARGEUR, 5);
+		final String TEXTE_BOUTON_DECONNEXION = "Se déconnecter";
+		final Dimension DIMENSION_BOUTON_DECONNEXION = new Dimension(200, 30); //largeur, hauteur
+		final String NOM_ICONE_BOUTON_DECONNEXION = "deconnexion.png";
 		
 		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
-		//contenu.setBackground(COULEUR_FOND);
+		contenu.setBackground(COULEUR_FOND);
 		
 		JLabel labelImage = new JLabel();
 		try {
@@ -368,15 +373,33 @@ public class Fenetre extends JFrame {
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
 		
-		/*JPanel pLogoDown = new JPanel();
-		pLogoDown.setOpaque(true);
-		pLogoDown.setBackground(COULEUR_FOND);
-		pLogoDown.setPreferredSize(DIMENSION_PLOGO_DOWN);
-		pLogo.add(pLogoDown, BorderLayout.SOUTH);*/
+		JPanel panneauSouth = new JPanel();
+		panneauSouth.setOpaque(true);
+		panneauSouth.setBackground(COULEUR_FOND);
+		panneauSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JButton boutonDeconnexion = new JButton(TEXTE_BOUTON_DECONNEXION);
+		boutonDeconnexion.setPreferredSize(DIMENSION_BOUTON_DECONNEXION);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_DECONNEXION));
+			boutonDeconnexion.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		panneauSouth.add(boutonDeconnexion);
+		contenu.add(panneauSouth, BorderLayout.SOUTH);
 		
-		JPanel panneauListeAmis; //scrolling fait sur ce panneau
-		JScrollPane scrollPane; //Pour le scrolling
-		contenu.add(new JButton(GestionDiscussion.getIdentifiantUtilisateur() + " / " + GestionDiscussion.getIdentiteUtilisateur()), BorderLayout.CENTER);
+		//LISTE D'AMIS
+		
+		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
+		JPanel panneauListeAmis = new JPanel(); //scrolling fait sur ce panneau
+		panneauListeAmis.setOpaque(true);
+		panneauListeAmis.setBackground(COULEUR_FOND);
+		LayoutManager boxLayout = new BoxLayout(panneauListeAmis, BoxLayout.Y_AXIS); //Vertical
+		panneauListeAmis.setLayout(boxLayout);
+		
+		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
+		scrollPane.setBorder(bordureInvisible);
+		contenu.add(scrollPane, BorderLayout.CENTER);
 		
 		this.updateAffichage();
 	}
