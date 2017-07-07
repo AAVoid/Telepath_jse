@@ -43,7 +43,7 @@ public class Fenetre extends JFrame {
 	private static final boolean REDIMENSIONNABLE = false;
 	private static final String NOM_APPLICATION = "Télépath";
 	private static final String NOM_AUTEUR = "Aymerik ABOSO";
-	private static final String VERSION = "0.7";
+	private static final String VERSION = "1.0";
 	private static final String NOM_FENETRE = NOM_APPLICATION + " V" + VERSION;
 	private static final String NOM_DOSSIER_RESSOURCE = "Ressources/";
 	private static final String NOM_DOSSIER_BACKGROUND = NOM_DOSSIER_RESSOURCE + "Background/";

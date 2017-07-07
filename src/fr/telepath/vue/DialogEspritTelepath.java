@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -21,7 +22,7 @@ public class DialogEspritTelepath extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static final Dimension DIMENSION_DIALOG = new Dimension(500, 300);
 	private static final boolean REDIMENSIONNABLE = false;
-	private static final Color COULEUR_FOND = new Color(199, 249, 226);
+	private static final Color COULEUR_TEXTE = Color.WHITE;
 	private static final int MARGE_TEXTE_GAUCHE = 10;
 	private static final String TEXTE = 
 			"<html>"
@@ -94,25 +95,22 @@ public class DialogEspritTelepath extends JDialog {
 		setResizable(REDIMENSIONNABLE);
 
 		this.labelTexte = new JLabel(TEXTE);
-		this.panneauFond = new JPanel();
+		this.labelTexte.setForeground(COULEUR_TEXTE);
+		try {
+			this.panneauFond = new PanneauImage(Fenetre.getNomDossierBackground() + "BackgroundEsprit.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.panneauFond.setLayout(new BorderLayout());
 		this.panneauFond.add(labelTexte, BorderLayout.CENTER);
 		JPanel panneauMargeGauche = new JPanel();
+		panneauMargeGauche.setOpaque(false);
 		panneauMargeGauche.setPreferredSize(new Dimension(MARGE_TEXTE_GAUCHE, DIMENSION_DIALOG.height));
-		panneauMargeGauche.setBackground(COULEUR_FOND);
 		panneauFond.add(panneauMargeGauche, BorderLayout.WEST);
 		this.scrollPane = new JScrollPane(this.panneauFond);
 		this.contenu = this.getContentPane();
 		contenu.setLayout(new BorderLayout());		
-		//JPanel panneauBackground = null;
-		//try {
-		//	panneauBackground = new PanneauImage(Fenetre.getNomDossierRessource() + NOM_IMAGE_BACKGROUND);
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//}
-		//panneauBackground.setLayout(new BorderLayout());
-		//this.contenu.add(panneauBackground, BorderLayout.CENTER);
-		this.panneauFond.setBackground(COULEUR_FOND);
+		
 		contenu.add(this.scrollPane, BorderLayout.CENTER);
 	}
 }

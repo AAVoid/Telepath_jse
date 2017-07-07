@@ -16,7 +16,7 @@ public class Main {
 		    e.printStackTrace();
 		}*/
 		Fenetre fenetre = new Fenetre();
-		fenetre.afficherSplashScreen();
+		//fenetre.afficherSplashScreen();
 		fenetre.afficher();
 	}
 }
