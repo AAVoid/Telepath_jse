@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import fr.telepath.modele.GestionDiscussion;
-import fr.telepath.modele.UtiliserWS;
+import fr.telepath.modele.service.UtiliserWS;
 import fr.telepath.vue.DialogActivation;
 import fr.telepath.vue.DialogIdentifiantsSauves;
 import fr.telepath.vue.DialogInscription;

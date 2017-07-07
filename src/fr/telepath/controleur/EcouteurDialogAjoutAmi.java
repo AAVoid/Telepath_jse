@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import fr.telepath.modele.GestionDiscussion;
-import fr.telepath.modele.UtiliserWS;
+import fr.telepath.modele.service.UtiliserWS;
 import fr.telepath.vue.DialogAjoutAmi;
 
 //AUTEUR : Aymerik ABOSO , MASTER 1 MIAGE , Université des Antilles - Guadeloupe

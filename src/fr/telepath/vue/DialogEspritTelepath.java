@@ -64,6 +64,8 @@ public class DialogEspritTelepath extends JDialog {
 					+ "<br>une discussion :</font><br>"
 					+ "Vous pourrez changer de correspondant tout en conservant la discussion "
 					+ "<br>actuelle avec chacun d'entre d'eux."
+					+ "<br><br>"
+					+ "<font size=\"5\">Suppression d'ami de la liste d'amis</font>"
 					+ "<br><br><br>"
 					+ "</html>";
 

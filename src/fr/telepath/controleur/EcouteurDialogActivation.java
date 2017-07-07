@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import fr.telepath.modele.Fichier;
-import fr.telepath.modele.UtiliserWS;
+import fr.telepath.modele.service.UtiliserWS;
 import fr.telepath.vue.DialogActivation;
 import fr.telepath.vue.Fenetre;
 

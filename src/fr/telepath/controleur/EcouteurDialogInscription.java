@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import fr.telepath.modele.UtiliserWS;
+import fr.telepath.modele.service.UtiliserWS;
 import fr.telepath.vue.DialogInscription;
 
 
@@ -58,7 +58,7 @@ public class EcouteurDialogInscription implements ActionListener {
 			}
 			String reponse = "";
 			try {
-				reponse = UtiliserWS.serviceInscription(champIdentite.getText().replaceAll(" ", ""), champEMail.getText().replaceAll(" ", ""));
+				reponse = UtiliserWS.serviceInscription(champIdentite.getText(), champEMail.getText());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -1,15 +1,18 @@
-package fr.telepath.modele;
+package fr.telepath.modele.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import fr.telepath.modele.Ami;
 
 
 
@@ -20,6 +23,7 @@ import org.json.JSONObject;
 
 public class UtiliserWS {
 	private static final String URL_SERVEUR = "http://ns4004962.ip-198-27-65.net/applications/WAL/";
+	private static final String ENCODAGE_PARAMETRE_URL = "UTF-8";
 
 
 	public static String utiliserService(String u) throws Exception{
@@ -40,13 +44,14 @@ public class UtiliserWS {
 
 	public static String serviceInscription(String identite, String eMail) throws Exception {
 		String url = URL_SERVEUR;
-		url += "wal.php?inscription&identite=" + identite + "&mail=" + eMail + "";
+		url += "wal.php?inscription&identite=" + URLEncoder.encode(identite, ENCODAGE_PARAMETRE_URL) + "&mail=" + 
+				URLEncoder.encode(eMail, ENCODAGE_PARAMETRE_URL) + "";
 		return utiliserService(url);
 	}
 
 	public static String serviceActivation(String identifiantActivation) throws Exception {
 		String url = URL_SERVEUR;
-		url += "wal.php?activation=" + identifiantActivation + "";
+		url += "wal.php?activation=" + URLEncoder.encode(identifiantActivation, ENCODAGE_PARAMETRE_URL) + "";
 		return utiliserService(url);
 	}
 
@@ -90,7 +95,7 @@ public class UtiliserWS {
 
 	public static String serviceObtenirParametres(String idUser) throws Exception {
 		String url = URL_SERVEUR;
-		url += "wal.php?identifiant=" + idUser + "";
+		url += "wal.php?identifiant=" + URLEncoder.encode(idUser, ENCODAGE_PARAMETRE_URL) + "";
 		return utiliserService(url);
 	}
 
@@ -112,7 +117,7 @@ public class UtiliserWS {
 
 	public static String serviceListerRelation(String idUser) throws Exception {
 		String url = URL_SERVEUR;
-		url += "wal.php?identifiant=" + idUser + "&relations";
+		url += "wal.php?identifiant=" + URLEncoder.encode(idUser, ENCODAGE_PARAMETRE_URL) + "&relations";
 		return utiliserService(url);
 	}
 
@@ -141,10 +146,11 @@ public class UtiliserWS {
 		Collections.sort(listeAmis);
 		return listeAmis;
 	}
-	
+
 	public static String serviceAjoutAmi(String idUser, String emailAmi) throws Exception {
 		String url = URL_SERVEUR;
-		url += "wal.php?identifiant=" + idUser + "&lier&mail=" + emailAmi +"";
+		url += "wal.php?identifiant=" + URLEncoder.encode(idUser, ENCODAGE_PARAMETRE_URL) + "&lier&mail=" 
+				+ URLEncoder.encode(emailAmi, ENCODAGE_PARAMETRE_URL) +"";
 		return utiliserService(url);
 	}
 }

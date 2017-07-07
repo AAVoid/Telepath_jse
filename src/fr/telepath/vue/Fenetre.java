@@ -30,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
 import fr.telepath.controleur.Controleur;
@@ -39,6 +40,7 @@ import fr.telepath.controleur.EcouteurListeAmis;
 import fr.telepath.controleur.EcouteurListeAmisDiscussion;
 import fr.telepath.modele.Ami;
 import fr.telepath.modele.GestionDiscussion;
+import fr.telepath.modele.ThreadDiscussion;
 
 
 
@@ -468,16 +470,18 @@ public class Fenetre extends JFrame {
 		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 140);
 		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
 		final String TEXTE_BOUTON_ENVOI_MESSAGE = "Envoyer";
-		final String TEXTE_BOUTON_AJOUTER_AMI = "Ajouter un ami";
-		final Dimension DIMENSION_BOUTON_DECONNEXION = new Dimension(200, 30); //largeur, hauteur
-		final Dimension DIMENSION_BOUTON_AJOUTER_AMI = new Dimension(200, 30);
+		final String TEXTE_BOUTON_QUITTER_DISCUSSION = "Quitter la discussion";
+		final Dimension DIMENSION_BOUTON_ENVOI_MESSAGE = new Dimension(150, 30); //largeur, hauteur
+		final Dimension DIMENSION_BOUTON_QUITTER_DISCUSSION = new Dimension(200, 30);
 		final String NOM_ICONE_BOUTON_ENVOI_MESSAGE = "envoyerMessage.png";
-		final String NOM_ICONE_BOUTON_AJOUTER_AMI = "ajouterAmi.png";
+		final String NOM_ICONE_BOUTON_QUITTER_DISCUSSION = "quitterDiscussion.png";
 		final String TEXTE_IDENTITE_CORRESPONDANT = "<html><font size=\"6\"><i>" 
 				+ ami.getIdentite() + "</i></font></html>";
-		final Dimension DIMENSION_BOUTON_AMI = new Dimension(Fenetre.LARGEUR - 40, 40);
-		final int ESPACE_ENTRE_AMIS = 10;
-		final String NOM_ICONE_DISCUTER_AMI = "discuter.png";
+		final int ESPACE_ENTRE_MESSAGES = 10;
+		final Color COULEUR_BORDURE_ZONE_TEXTE = Color.BLACK;
+		final int NOMBRE_COLONNES_ZONE_TEXTE = 37;
+		final int NOMBRE_LIGNES_ZONE_TEXTE = 6;
+		final int ESPACEMENT_BOUTON_QUITTER_DISCUSSION = 200;
 
 		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
@@ -511,8 +515,8 @@ public class Fenetre extends JFrame {
 		//le bouton prenne toute la place
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
-		JPanel pIdentiteAmi = new JPanel(); /*Panneau sur lequel est affichée
-			l'identité de l'utilisateur*/
+		
+		JPanel pIdentiteAmi = new JPanel(); /*Panneau sur lequel est affichée l'identité de l'utilisateur*/
 		pIdentiteAmi.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pIdentiteAmi.setOpaque(true);
 		pIdentiteAmi.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
@@ -525,60 +529,64 @@ public class Fenetre extends JFrame {
 		//panneauSouth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panneauSouth.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
 		panneauSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
-		JButton boutonEnvoiMessage = new JButton(TEXTE_BOUTON_DECONNEXION);
-		boutonEnvoiMessage.setPreferredSize(DIMENSION_BOUTON_DECONNEXION);
+		JButton boutonEnvoiMessage = new JButton(TEXTE_BOUTON_ENVOI_MESSAGE);
+		boutonEnvoiMessage.setPreferredSize(DIMENSION_BOUTON_ENVOI_MESSAGE);
 		try {
 			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_ENVOI_MESSAGE));
 			boutonEnvoiMessage.setIcon(new ImageIcon(img));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//boutonQuitterDiscussion.addActionListener(new EcouteurListeAmis(this, 1));
-		JButton boutonQuitterDiscussion = new JButton(TEXTE_BOUTON_AJOUTER_AMI);
-		boutonQuitterDiscussion.setPreferredSize(DIMENSION_BOUTON_AJOUTER_AMI);
+
+		JButton boutonQuitterDiscussion = new JButton(TEXTE_BOUTON_QUITTER_DISCUSSION);
+		boutonQuitterDiscussion.setPreferredSize(DIMENSION_BOUTON_QUITTER_DISCUSSION);
+		pIdentiteAmi.add(Box.createRigidArea(new Dimension(ESPACEMENT_BOUTON_QUITTER_DISCUSSION, 1)));
 		try {
-			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_AJOUTER_AMI));
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_QUITTER_DISCUSSION));
 			boutonQuitterDiscussion.setIcon(new ImageIcon(img));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//boutonAjouterAmi.addActionListener(new EcouteurListeAmis(this, 2));
-		panneauSouth.add(boutonDeconnexion);
-		pIdentiteAmi.add(boutonAjouterAmi);
+		
+		JTextArea zoneTexte = new JTextArea("", NOMBRE_LIGNES_ZONE_TEXTE, NOMBRE_COLONNES_ZONE_TEXTE); //ligne, colonnes
+		zoneTexte.setBorder(BorderFactory.createLineBorder(COULEUR_BORDURE_ZONE_TEXTE));
+		panneauSouth.add(zoneTexte);
+		panneauSouth.add(boutonEnvoiMessage);
+		pIdentiteAmi.add(boutonQuitterDiscussion);
 		contenu.add(panneauSouth, BorderLayout.SOUTH);
 
-		/*//Messages
+		//Affichage des messages
 		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
-		JPanel panneauListeAmis = new JPanel(); //scrolling fait sur ce panneau
-		panneauListeAmis.setOpaque(true);
-		panneauListeAmis.setBackground(COULEUR_FOND);
-		LayoutManager boxLayout = new BoxLayout(panneauListeAmis, BoxLayout.Y_AXIS); //Vertical
-		panneauListeAmis.setLayout(boxLayout);
+		JPanel panneauMessages = new JPanel(); //scrolling fait sur ce panneau
+		panneauMessages.setOpaque(true);
+		panneauMessages.setBackground(COULEUR_FOND);
+		LayoutManager boxLayout = new BoxLayout(panneauMessages, BoxLayout.Y_AXIS); //Vertical
+		panneauMessages.setLayout(boxLayout);
 
-		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
+		JScrollPane scrollPane = new JScrollPane(panneauMessages); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
 		contenu.add(scrollPane, BorderLayout.CENTER);
 
-		ArrayList<Ami> listeAmis = Controleur.obtenirListeAmis(this, GestionDiscussion.getIdentifiantUtilisateur());
-		panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
-		for(Ami a : listeAmis) {
-			JButton boutonAmi = new JButton(a.getIdentite());
-			try {
-				Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_DISCUTER_AMI));
-				boutonAmi.setIcon(new ImageIcon(img));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			boutonAmi.setMinimumSize(DIMENSION_BOUTON_AMI);
-			boutonAmi.setMaximumSize(DIMENSION_BOUTON_AMI);
-			boutonAmi.setAlignmentX(Component.CENTER_ALIGNMENT);
-			//Ecouteur
-			boutonAmi.addActionListener(new EcouteurListeAmisDiscussion(a, this));
-			panneauListeAmis.add(boutonAmi);
-			panneauListeAmis.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_AMIS)));
-		}*/
+		//Initialisation du thread de récupération de messages
+		ThreadDiscussion threadDiscu = new ThreadDiscussion(this, ami);
+		threadDiscu.start();
+		
+		//boutonQuitterDiscussion.addActionListener(new EcouteurListeAmis(this, 1));
+		//boutonAjouterAmi.addActionListener(new EcouteurListeAmis(this, 2));
 
 		this.updateAffichage();
+	}
+	
+	public void ajouterMessagesDiscussionMoi(String message, JPanel panneauMessages) {
+		final 
+		JButton boutonMessage = new JButton(message);
+		boutonMessage.setMinimumSize(DIMENSION_BOUTON_AMI);
+		boutonMessage.setMaximumSize(DIMENSION_BOUTON_AMI);
+		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+	
+	public void ajouterMessagesDiscussionCorrespondant(String message, JPanel panneauMessages) {
+		
 	}
 }
 

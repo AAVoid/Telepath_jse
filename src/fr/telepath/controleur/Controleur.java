@@ -6,9 +6,9 @@ import javax.swing.JOptionPane;
 
 import fr.telepath.modele.Ami;
 import fr.telepath.modele.IdentifiantSauve;
-import fr.telepath.modele.UtiliserWS;
 import fr.telepath.modele.donnees.DAO_IdentifiantSauve;
 import fr.telepath.modele.donnees.SingletonConnectionSQLITE;
+import fr.telepath.modele.service.UtiliserWS;
 import fr.telepath.vue.Fenetre;
 
 
