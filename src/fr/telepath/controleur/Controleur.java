@@ -17,18 +17,18 @@ import fr.telepath.modele.donnees.SingletonConnectionSQLITE;
 public class Controleur {
 	public static ArrayList<IdentifiantSauve> chargerIdentifiantsSauve() {
 		ArrayList<IdentifiantSauve> listeIdentifiants = new ArrayList<IdentifiantSauve>();
-		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getConnexion());
 		listeIdentifiants = daoId.lireTable();
 		return listeIdentifiants;
 	}
 	
 	public static boolean viderIdentifiantsSauve() {
-		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getConnexion());
 		return daoId.truncateTable();
 	}
 	
 	public static boolean sauverIdentifiantsSauve(ArrayList<IdentifiantSauve> listeIdentifiants) {
-		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getCon());
+		DAO_IdentifiantSauve daoId = new DAO_IdentifiantSauve(SingletonConnectionSQLITE.getConnexion());
 		return daoId.chargerTable(listeIdentifiants);
 	}
 }

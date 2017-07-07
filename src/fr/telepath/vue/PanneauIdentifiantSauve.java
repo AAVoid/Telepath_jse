@@ -135,17 +135,19 @@ public class PanneauIdentifiantSauve extends JPanel {
 		return identifiant;
 	}
 
-	/*public void setIdentifiant(JTextField identifiant) {
+	@SuppressWarnings("unused")
+	private void setIdentifiant(JTextField identifiant) {
 		this.identifiant = identifiant;
-	}*/
+	}
 
 	public JTextField getLabel() {
 		return label;
 	}
 
-	/*public void setLabel(JTextField label) {
+	@SuppressWarnings("unused")
+	private void setLabel(JTextField label) {
 		this.label = label;
-	}*/
+	}
 }
 
 

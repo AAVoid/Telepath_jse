@@ -22,13 +22,18 @@ public class IdentifiantSauve {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
+	
+	@SuppressWarnings("unused")
+	private void setId(String id) {
 		this.id = id;
 	}
+	
 	public String getLabel() {
 		return label;
 	}
-	public void setLabel(String label) {
+	
+	@SuppressWarnings("unused")
+	private void setLabel(String label) {
 		this.label = label;
 	}
 }

@@ -31,6 +31,8 @@ import javax.swing.border.Border;
 
 import fr.telepath.controleur.EcouteurAccueil;
 import fr.telepath.controleur.EcouteurJMenu;
+import fr.telepath.controleur.EcouteurListeAmis;
+import fr.telepath.modele.GestionDiscussion;
 
 
 
@@ -336,16 +338,23 @@ public class Fenetre extends JFrame {
 	public void afficherListeAmis() {
 		final Color COULEUR_BORDURE = new Color(66, 152, 244);
 		final Color COULEUR_FOND = new Color(199, 249, 226);
-		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 110);
+		final Color COULEUR_FOND_PANNEAU_HAUT_BAS = new Color(160, 196, 255);
+		final Dimension DIMENSION_PLOGO = new Dimension(Fenetre.LARGEUR, 150);
 		final Dimension DIMENSION_PLOGO_UP = new Dimension(Fenetre.LARGEUR, 10);
 		final String TEXTE_BOUTON_DECONNEXION = "Se déconnecter";
+		final String TEXTE_BOUTON_AJOUTER_AMI = "Ajouter un ami";
 		final Dimension DIMENSION_BOUTON_DECONNEXION = new Dimension(200, 30); //largeur, hauteur
+		final Dimension DIMENSION_BOUTON_AJOUTER_AMI = new Dimension(200, 30);
 		final String NOM_ICONE_BOUTON_DECONNEXION = "deconnexion.png";
-		
+		final String NOM_ICONE_BOUTON_AJOUTER_AMI = "ajouterAmi.png";
+		final String TEXTE_BONJOUR_UTILISATEUR = "<html><font size=\"4\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bonjour <font size=\"6\">" 
+				+ GestionDiscussion.getIdentiteUtilisateur() + "</font></font> !</html>";
+
 		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
 		contenu.setBackground(COULEUR_FOND);
-		
+
+		//HAUT ET BAS
 		JLabel labelImage = new JLabel();
 		try {
 			Image img = ImageIO.read(new File(NOM_DOSSIER_AUTRE + NOM_IMAGE_LOGO));
@@ -354,28 +363,38 @@ public class Fenetre extends JFrame {
 			e.printStackTrace();
 		}
 		JPanel pLogo = new JPanel();
+		//pLogo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		contenu.add(pLogo, BorderLayout.NORTH);
 		pLogo.setOpaque(true);
-		pLogo.setBackground(COULEUR_FOND);
+		pLogo.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
 		pLogo.setLayout(new BorderLayout());
 		pLogo.setPreferredSize(DIMENSION_PLOGO);
-		
+
 		JPanel pLogoUp = new JPanel();
 		pLogoUp.setOpaque(true);
-		pLogoUp.setBackground(COULEUR_FOND);
+		pLogoUp.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
 		pLogoUp.setPreferredSize(DIMENSION_PLOGO_UP); //Pour faire descendre l'image
 		pLogo.add(pLogoUp, BorderLayout.NORTH);
 		JPanel pImage = new JPanel();
 		pImage.setOpaque(true);
-		pImage.setBackground(COULEUR_FOND);
+		pImage.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
 		pImage.setLayout(new FlowLayout(FlowLayout.CENTER)); //ajout au centre (pour éviter que 
 		//le bouton prenne toute la place
 		pImage.add(labelImage);
 		pLogo.add(pImage, BorderLayout.CENTER);
-		
-		JPanel panneauSouth = new JPanel();
+		JPanel pLogoBonjourUtilisateur = new JPanel(); /*Panneau sur lequel est affichée
+		l'identité de l'utilisateur*/
+		pLogoBonjourUtilisateur.setLayout(new FlowLayout(FlowLayout.LEFT));
+		pLogoBonjourUtilisateur.setOpaque(true);
+		pLogoBonjourUtilisateur.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
+		pLogo.add(pLogoBonjourUtilisateur, BorderLayout.SOUTH);
+		JLabel labelBonjourUtilisateur = new JLabel(TEXTE_BONJOUR_UTILISATEUR);
+		pLogoBonjourUtilisateur.add(labelBonjourUtilisateur);
+
+				JPanel panneauSouth = new JPanel();
 		panneauSouth.setOpaque(true);
-		panneauSouth.setBackground(COULEUR_FOND);
+		//panneauSouth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		panneauSouth.setBackground(COULEUR_FOND_PANNEAU_HAUT_BAS);
 		panneauSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JButton boutonDeconnexion = new JButton(TEXTE_BOUTON_DECONNEXION);
 		boutonDeconnexion.setPreferredSize(DIMENSION_BOUTON_DECONNEXION);
@@ -385,22 +404,33 @@ public class Fenetre extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		boutonDeconnexion.addActionListener(new EcouteurListeAmis(this, 1));
+		JButton boutonAjouterAmi = new JButton(TEXTE_BOUTON_AJOUTER_AMI);
+		boutonAjouterAmi.setPreferredSize(DIMENSION_BOUTON_AJOUTER_AMI);
+		try {
+			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_AJOUTER_AMI));
+			boutonAjouterAmi.setIcon(new ImageIcon(img));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		boutonAjouterAmi.addActionListener(new EcouteurListeAmis(this, 2));
 		panneauSouth.add(boutonDeconnexion);
+		panneauSouth.add(boutonAjouterAmi);
 		contenu.add(panneauSouth, BorderLayout.SOUTH);
-		
+
 		//LISTE D'AMIS
-		
+
 		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
 		JPanel panneauListeAmis = new JPanel(); //scrolling fait sur ce panneau
 		panneauListeAmis.setOpaque(true);
 		panneauListeAmis.setBackground(COULEUR_FOND);
 		LayoutManager boxLayout = new BoxLayout(panneauListeAmis, BoxLayout.Y_AXIS); //Vertical
 		panneauListeAmis.setLayout(boxLayout);
-		
+
 		JScrollPane scrollPane = new JScrollPane(panneauListeAmis); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
 		contenu.add(scrollPane, BorderLayout.CENTER);
-		
+
 		this.updateAffichage();
 	}
 }

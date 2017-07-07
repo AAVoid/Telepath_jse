@@ -166,17 +166,19 @@ public class DialogIdentifiantsSauves extends JDialog {
 		return idPasswordField;
 	}
 
-	/*private void setIdPasswordField(JPasswordField idPasswordField) {
+	@SuppressWarnings("unused")
+	private void setIdPasswordField(JPasswordField idPasswordField) {
 	this.idPasswordField = idPasswordField;
-	}*/
+	}
 
 	public JPanel getPanneauId() {
 		return panneauId;
 	}
 
-	/*public void setPanneauId(JPanel panneauId) {
+	@SuppressWarnings("unused")
+	private void setPanneauId(JPanel panneauId) {
 		this.panneauId = panneauId;
-	}*/
+	}
 	
 	public ArrayList<IdentifiantSauve> getListeIdentifiants() {
 		return listeIdentifiants;

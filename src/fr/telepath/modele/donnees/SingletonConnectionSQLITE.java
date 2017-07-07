@@ -32,11 +32,11 @@ public class SingletonConnectionSQLITE {
 
 	private static final SingletonConnectionSQLITE Singleton = new SingletonConnectionSQLITE();
 
-	public Connection getConnection() {
+	private Connection getConnection() {
 		return connection;
 	}
 
-	public static Connection getCon() {
+	public static Connection getConnexion() {
 		return SingletonConnectionSQLITE.getSingleton().getConnection();
 	}
 
