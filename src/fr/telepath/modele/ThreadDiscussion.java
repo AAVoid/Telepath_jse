@@ -1,6 +1,5 @@
 package fr.telepath.modele;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.json.JSONArray;
@@ -19,8 +18,7 @@ import fr.telepath.vue.Fenetre;
 
 //Classe utilisée pour automatiser la récupération des messages sur le serveur
 public class ThreadDiscussion extends Thread {
-	private static final String NOM_POPUP_ECHEC_RECEPTION = "Erreur de reception des messages !";
-	private static final String MESSAGE_POPUP_ECHEC_RECEPTION = "Les messages n'ont pas pu être récupérés !\n"
+	private static final String MESSAGE_ECHEC_RECEPTION = "Les messages n'ont pas pu être récupérés !\n"
 			+ "L'application rencontre peut-être des difficultés.";
 	
 	private Fenetre fenetre; //Panneau message dans la classe Fenetre, dans la discussion
@@ -52,8 +50,7 @@ public class ThreadDiscussion extends Thread {
 			//Parsage JSON
 			int rep = UtiliserWS.getReponse(reponse);
 			if(rep == 1) {
-				System.out.println(reponse);
-				//Affichage des messages dans l'interface
+				//AFFICHAGE DES MESSAGES DANS L'INTERFACE
 				JSONObject jo = null;
 				JSONArray tab = null;
 				try {
@@ -63,19 +60,25 @@ public class ThreadDiscussion extends Thread {
 					e.printStackTrace();
 				}
 				String mes = "";
+				String identiteExpediteur = "";
 				for(int i = 0 ; i < tab.length() ; i++) {
 					try {
+						identiteExpediteur = tab.getJSONObject(i).getString("identite");
 						mes = tab.getJSONObject(i).getString("message");
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					fenetre.ajouterMessagesDiscussionCorrespondant(mes.replaceAll("\n", "<br>"), this.panneauMessages);
-					fenetre.updateAffichage();
+					/*ON RAJOUTE LE MESSAGE A LA DISCUSSION EN FONCTION DE L'EXPEDITEUR QUI PEUT ETRE
+					LE CORRESPONDANT OU NOUS-MEME*/
+					if(identiteExpediteur.equals(GestionDiscussion.getIdentiteUtilisateur()))
+						fenetre.ajouterMessagesDiscussionMoi(mes, this.panneauMessages);
+					else
+						fenetre.ajouterMessagesDiscussionCorrespondant(mes, this.panneauMessages);
+					fenetre.updateAffichage(); //Mise à jour de la fenêtre et donc du panneau discussion
 				}
 			}
-			else if(rep == 0)
-				JOptionPane.showMessageDialog(fenetre, MESSAGE_POPUP_ECHEC_RECEPTION, 
-						NOM_POPUP_ECHEC_RECEPTION, JOptionPane.ERROR_MESSAGE);
+			else if(rep == 0) //On affiche un message système
+				fenetre.ajouterMessagesDiscussionSysteme(MESSAGE_ECHEC_RECEPTION, this.panneauMessages);
 			//On attend pour la prochaine récupération
 			try {
 				sleep(GestionDiscussion.getFrequenceRecuperationMessageLong());

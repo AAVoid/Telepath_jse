@@ -154,12 +154,21 @@ public class UtiliserWS {
 				+ URLEncoder.encode(emailAmi, ENCODAGE_PARAMETRE_URL) +"";
 		return utiliserService(url);
 	}
-	
+
 	public static String serviceLireMessages(int idRelationCorrespondant) throws Exception {
 		String url = URL_SERVEUR;
 		url += "wal.php?identifiant=" + URLEncoder.encode(GestionDiscussion.getIdentifiantUtilisateur(), 
 				ENCODAGE_PARAMETRE_URL) + "&lire&relation=" 
 				+ URLEncoder.encode("" + idRelationCorrespondant, ENCODAGE_PARAMETRE_URL) +"";
+		return utiliserService(url);
+	}
+
+	public static String serviceEnvoyerMessage(int idParametreCorrespondant, String message) throws Exception {
+		String url = URL_SERVEUR;
+		url += "wal.php?identifiant=" + URLEncoder.encode(GestionDiscussion.getIdentifiantUtilisateur(), 
+				ENCODAGE_PARAMETRE_URL) + "&ecrire&destinataire="
+				+ URLEncoder.encode("" + idParametreCorrespondant, ENCODAGE_PARAMETRE_URL) 
+				+"&message=" + URLEncoder.encode(message, ENCODAGE_PARAMETRE_URL);
 		return utiliserService(url);
 	}
 }

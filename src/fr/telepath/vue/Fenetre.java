@@ -473,7 +473,7 @@ public class Fenetre extends JFrame {
 		final String TEXTE_BOUTON_ENVOI_MESSAGE = "Envoyer";
 		final String TEXTE_BOUTON_QUITTER_DISCUSSION = "Quitter la discussion";
 		final Dimension DIMENSION_BOUTON_ENVOI_MESSAGE = new Dimension(150, 30); //largeur, hauteur
-		final Dimension DIMENSION_BOUTON_QUITTER_DISCUSSION = new Dimension(200, 30);
+		final Dimension DIMENSION_BOUTON_QUITTER_DISCUSSION = new Dimension(400, 30);
 		final String NOM_ICONE_BOUTON_ENVOI_MESSAGE = "envoyerMessage.png";
 		final String NOM_ICONE_BOUTON_QUITTER_DISCUSSION = "quitterDiscussion.png";
 		final String TEXTE_IDENTITE_CORRESPONDANT = "<html><font size=\"6\"><i>" 
@@ -481,7 +481,7 @@ public class Fenetre extends JFrame {
 		final Color COULEUR_BORDURE_ZONE_TEXTE = Color.BLACK;
 		final int NOMBRE_COLONNES_ZONE_TEXTE = 37;
 		final int NOMBRE_LIGNES_ZONE_TEXTE = 6;
-		final int ESPACEMENT_BOUTON_QUITTER_DISCUSSION = 290;
+		final int ESPACEMENT_BOUTON_QUITTER_DISCUSSION = 10;
 		final int ESPACE_PREMIER_MESSAGES = 10;
 
 		contenu.removeAll();
@@ -540,7 +540,9 @@ public class Fenetre extends JFrame {
 		}
 
 		JButton boutonQuitterDiscussion = new JButton(TEXTE_BOUTON_QUITTER_DISCUSSION);
-		boutonQuitterDiscussion.setPreferredSize(DIMENSION_BOUTON_QUITTER_DISCUSSION);
+		//boutonQuitterDiscussion.setPreferredSize(DIMENSION_BOUTON_QUITTER_DISCUSSION);
+		boutonQuitterDiscussion.setMinimumSize(DIMENSION_BOUTON_QUITTER_DISCUSSION);
+		boutonQuitterDiscussion.setMaximumSize(DIMENSION_BOUTON_QUITTER_DISCUSSION);
 		pIdentiteAmi.add(Box.createRigidArea(new Dimension(ESPACEMENT_BOUTON_QUITTER_DISCUSSION, 1)));
 		try {
 			Image img = ImageIO.read(new File(NOM_DOSSIER_ICONE + NOM_ICONE_BOUTON_QUITTER_DISCUSSION));
@@ -551,11 +553,16 @@ public class Fenetre extends JFrame {
 		
 		JTextArea zoneTexte = new JTextArea("", NOMBRE_LIGNES_ZONE_TEXTE, NOMBRE_COLONNES_ZONE_TEXTE); //ligne, colonnes
 		zoneTexte.setBorder(BorderFactory.createLineBorder(COULEUR_BORDURE_ZONE_TEXTE));
-		panneauSouth.add(zoneTexte);
+		zoneTexte.setWrapStyleWord(true); //Pour que la zone ne s'agrandisse pas si le texte est trop grand
+		zoneTexte.setLineWrap(true); //sur une seule ligne
+		//Pour le scrolling pour éviter que la textArea s'agrandisse verticalement sur trop de texte
+		JScrollPane textAreaScrollPane = new JScrollPane(zoneTexte); //Pour le scrolling
+		textAreaScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		panneauSouth.add(textAreaScrollPane);
 		panneauSouth.add(boutonEnvoiMessage);
 		pIdentiteAmi.add(boutonQuitterDiscussion);
 		contenu.add(panneauSouth, BorderLayout.SOUTH);
-
+		
 		//Affichage des messages
 		Border bordureInvisible = BorderFactory.createEmptyBorder(); //Pour effacer la bordure du scrollPane
 		JPanel panneauMessages = new JPanel(); //scrolling fait sur ce panneau
@@ -563,7 +570,6 @@ public class Fenetre extends JFrame {
 		panneauMessages.setBackground(COULEUR_FOND);
 		LayoutManager boxLayout = new BoxLayout(panneauMessages, BoxLayout.Y_AXIS); //Vertical
 		panneauMessages.setLayout(boxLayout);
-		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_PREMIER_MESSAGES)));
 
 		JScrollPane scrollPane = new JScrollPane(panneauMessages); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
@@ -573,11 +579,15 @@ public class Fenetre extends JFrame {
 		ThreadDiscussion threadDiscu = new ThreadDiscussion(this, panneauMessages, ami);
 		threadDiscu.start();
 		
-		boutonEnvoiMessage.addActionListener(new EcouteurDiscussion(1, this, zoneTexte, threadDiscu));
-		boutonQuitterDiscussion.addActionListener(new EcouteurDiscussion(2, this, zoneTexte, threadDiscu));
+		boutonEnvoiMessage.addActionListener(new EcouteurDiscussion(1, this, zoneTexte, threadDiscu, ami));
+		boutonQuitterDiscussion.addActionListener(new EcouteurDiscussion(2, this, zoneTexte, threadDiscu, ami));
 		
-		ajouterMessagesDiscussionMoi("test", panneauMessages);
-
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_PREMIER_MESSAGES)));
+		panneauMessages.add(boutonQuitterDiscussion);
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_PREMIER_MESSAGES)));
+		boutonQuitterDiscussion.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		
 		this.updateAffichage();
 	}
 	
@@ -585,7 +595,7 @@ public class Fenetre extends JFrame {
 		final int ESPACE_ENTRE_MESSAGES = 10;
 		final Color COULEUR_BOUTON = new Color(86, 151, 255);
 		
-		JButton boutonMessage = new JButton(message);
+		JButton boutonMessage = new JButton("<html>" + message + "</html>");
 		boutonMessage.setBackground(COULEUR_BOUTON);
 		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panneauMessages.add(boutonMessage);
@@ -596,7 +606,18 @@ public class Fenetre extends JFrame {
 		final int ESPACE_ENTRE_MESSAGES = 10;
 		final Color COULEUR_BOUTON = new Color(40, 252, 100);
 		
-		JButton boutonMessage = new JButton(message);
+		JButton boutonMessage = new JButton("<html>" + message + "</html>");
+		boutonMessage.setBackground(COULEUR_BOUTON);
+		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panneauMessages.add(boutonMessage);
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_MESSAGES)));
+	}
+	
+	public void ajouterMessagesDiscussionSysteme(String message, JPanel panneauMessages) {
+		final int ESPACE_ENTRE_MESSAGES = 10;
+		final Color COULEUR_BOUTON = new Color(242, 41, 41);
+		
+		JButton boutonMessage = new JButton("<html>" + message + "</html>");
 		boutonMessage.setBackground(COULEUR_BOUTON);
 		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panneauMessages.add(boutonMessage);
