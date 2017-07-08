@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.telepath.modele.Ami;
+import fr.telepath.modele.GestionDiscussion;
 
 
 
@@ -151,6 +152,14 @@ public class UtiliserWS {
 		String url = URL_SERVEUR;
 		url += "wal.php?identifiant=" + URLEncoder.encode(idUser, ENCODAGE_PARAMETRE_URL) + "&lier&mail=" 
 				+ URLEncoder.encode(emailAmi, ENCODAGE_PARAMETRE_URL) +"";
+		return utiliserService(url);
+	}
+	
+	public static String serviceLireMessages(int idRelationCorrespondant) throws Exception {
+		String url = URL_SERVEUR;
+		url += "wal.php?identifiant=" + URLEncoder.encode(GestionDiscussion.getIdentifiantUtilisateur(), 
+				ENCODAGE_PARAMETRE_URL) + "&lire&relation=" 
+				+ URLEncoder.encode("" + idRelationCorrespondant, ENCODAGE_PARAMETRE_URL) +"";
 		return utiliserService(url);
 	}
 }

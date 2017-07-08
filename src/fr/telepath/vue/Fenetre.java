@@ -35,6 +35,7 @@ import javax.swing.border.Border;
 
 import fr.telepath.controleur.Controleur;
 import fr.telepath.controleur.EcouteurAccueil;
+import fr.telepath.controleur.EcouteurDiscussion;
 import fr.telepath.controleur.EcouteurJMenu;
 import fr.telepath.controleur.EcouteurListeAmis;
 import fr.telepath.controleur.EcouteurListeAmisDiscussion;
@@ -477,11 +478,11 @@ public class Fenetre extends JFrame {
 		final String NOM_ICONE_BOUTON_QUITTER_DISCUSSION = "quitterDiscussion.png";
 		final String TEXTE_IDENTITE_CORRESPONDANT = "<html><font size=\"6\"><i>" 
 				+ ami.getIdentite() + "</i></font></html>";
-		final int ESPACE_ENTRE_MESSAGES = 10;
 		final Color COULEUR_BORDURE_ZONE_TEXTE = Color.BLACK;
 		final int NOMBRE_COLONNES_ZONE_TEXTE = 37;
 		final int NOMBRE_LIGNES_ZONE_TEXTE = 6;
-		final int ESPACEMENT_BOUTON_QUITTER_DISCUSSION = 200;
+		final int ESPACEMENT_BOUTON_QUITTER_DISCUSSION = 290;
+		final int ESPACE_PREMIER_MESSAGES = 10;
 
 		contenu.removeAll();
 		contenu.setLayout(new BorderLayout());
@@ -562,31 +563,44 @@ public class Fenetre extends JFrame {
 		panneauMessages.setBackground(COULEUR_FOND);
 		LayoutManager boxLayout = new BoxLayout(panneauMessages, BoxLayout.Y_AXIS); //Vertical
 		panneauMessages.setLayout(boxLayout);
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_PREMIER_MESSAGES)));
 
 		JScrollPane scrollPane = new JScrollPane(panneauMessages); //Pour le scrolling
 		scrollPane.setBorder(bordureInvisible);
 		contenu.add(scrollPane, BorderLayout.CENTER);
 
 		//Initialisation du thread de récupération de messages
-		ThreadDiscussion threadDiscu = new ThreadDiscussion(this, ami);
+		ThreadDiscussion threadDiscu = new ThreadDiscussion(this, panneauMessages, ami);
 		threadDiscu.start();
 		
-		//boutonQuitterDiscussion.addActionListener(new EcouteurListeAmis(this, 1));
-		//boutonAjouterAmi.addActionListener(new EcouteurListeAmis(this, 2));
+		boutonEnvoiMessage.addActionListener(new EcouteurDiscussion(1, this, zoneTexte, threadDiscu));
+		boutonQuitterDiscussion.addActionListener(new EcouteurDiscussion(2, this, zoneTexte, threadDiscu));
+		
+		ajouterMessagesDiscussionMoi("test", panneauMessages);
 
 		this.updateAffichage();
 	}
 	
 	public void ajouterMessagesDiscussionMoi(String message, JPanel panneauMessages) {
-		final 
+		final int ESPACE_ENTRE_MESSAGES = 10;
+		final Color COULEUR_BOUTON = new Color(86, 151, 255);
+		
 		JButton boutonMessage = new JButton(message);
-		boutonMessage.setMinimumSize(DIMENSION_BOUTON_AMI);
-		boutonMessage.setMaximumSize(DIMENSION_BOUTON_AMI);
+		boutonMessage.setBackground(COULEUR_BOUTON);
 		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panneauMessages.add(boutonMessage);
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_MESSAGES)));
 	}
 	
 	public void ajouterMessagesDiscussionCorrespondant(String message, JPanel panneauMessages) {
+		final int ESPACE_ENTRE_MESSAGES = 10;
+		final Color COULEUR_BOUTON = new Color(40, 252, 100);
 		
+		JButton boutonMessage = new JButton(message);
+		boutonMessage.setBackground(COULEUR_BOUTON);
+		boutonMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panneauMessages.add(boutonMessage);
+		panneauMessages.add(Box.createRigidArea(new Dimension(1, ESPACE_ENTRE_MESSAGES)));
 	}
 }
 
